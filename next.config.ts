@@ -1,10 +1,11 @@
-```ts
 import type { NextConfig } from "next";
+
+const isGithubPages = process.env.GITHUB_ACTIONS === "true";
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: "/horse-farm-website",
-  assetPrefix: "/horse-farm-website/",
+  basePath: isGithubPages ? "/horse-farm-website" : "",
+  assetPrefix: isGithubPages ? "/horse-farm-website/" : undefined,
   images: {
     unoptimized: true,
   },
@@ -18,4 +19,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-```
