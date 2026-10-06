@@ -240,7 +240,11 @@ export default function HorsesPage() {
           </div>
         ) : (
           <div className="glass-card rounded-2xl p-16 text-center border border-white/10 max-w-lg mx-auto">
-            <span className="text-4xl block mb-3">🐎</span>
+            <img
+              src="/images/logo/horse-county-emblem.png"
+              alt="HORSE COUNTY"
+              className="w-12 h-12 object-contain rounded-full mx-auto mb-4 drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]"
+            />
             <h3 className="text-xl font-bold text-white mb-2">No Horses Match These Filters</h3>
             <p className="text-xs text-gray-400 mb-6 leading-relaxed">
               We couldn't find any horses matching your exact search. Try adjusting your breed, price bracket, or age criteria.

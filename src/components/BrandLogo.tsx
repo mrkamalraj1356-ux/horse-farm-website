@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { FARM_CONFIG } from '@/data/config';
 
 interface BrandLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -8,50 +7,49 @@ interface BrandLogoProps {
   className?: string;
 }
 
-export default function BrandLogo({ size = 'md', withLink = true, className = '' }: BrandLogoProps) {
+export default function BrandLogo({
+  size = 'md',
+  withLink = true,
+  className = ''
+}: BrandLogoProps) {
   const iconSizes = {
-    sm: 'w-7 h-7',
-    md: 'w-9 h-9',
-    lg: 'w-12 h-12',
-    xl: 'w-16 h-16',
+    sm: 'w-8 h-8 sm:w-9 sm:h-9',
+    md: 'w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12',
+    lg: 'w-11 h-11 sm:w-12 sm:h-12 md:w-13 md:h-13',
+    xl: 'w-14 h-14 sm:w-16 sm:h-16',
   };
 
   const titleSizes = {
-    sm: 'text-sm font-semibold tracking-wider',
-    md: 'text-base font-bold tracking-widest',
-    lg: 'text-xl font-bold tracking-[0.2em]',
-    xl: 'text-2xl font-extrabold tracking-[0.25em]',
+    sm: 'text-sm sm:text-base font-bold tracking-[0.14em]',
+    md: 'text-base sm:text-lg md:text-xl font-bold tracking-[0.16em]',
+    lg: 'text-lg sm:text-xl md:text-2xl font-bold tracking-[0.18em]',
+    xl: 'text-2xl sm:text-3xl font-extrabold tracking-[0.2em]',
   };
 
-  const subtitleSizes = {
-    sm: 'text-[9px] tracking-[0.25em]',
-    md: 'text-[10px] tracking-[0.3em]',
-    lg: 'text-xs tracking-[0.35em]',
-    xl: 'text-sm tracking-[0.4em]',
+  const taglineSizes = {
+    sm: 'text-[8px] sm:text-[9px] tracking-[0.22em]',
+    md: 'text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em]',
+    lg: 'text-[10px] sm:text-[11px] tracking-[0.26em]',
+    xl: 'text-xs sm:text-sm tracking-[0.3em]',
   };
 
   const content = (
-    <div className={`inline-flex items-center gap-3 group cursor-pointer ${className}`}>
-      {/* Luxury Horse Head Silhouette Emblem */}
-      <div className={`relative flex items-center justify-center rounded-full bg-gradient-to-br from-[#2a2418] via-[#1a1712] to-[#0d0c0a] border border-[#d4af37]/40 p-2 shadow-[0_0_15px_rgba(212,175,55,0.2)] group-hover:border-[#d4af37] transition-all duration-300 ${iconSizes[size]}`}>
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full text-[#d4af37] fill-current transform group-hover:scale-105 transition-transform duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-        >
-          {/* Refined Royal Horse Head Silhouette with inward lyre ears */}
-          <path d="M 28 85 C 26 75, 25 60, 30 45 C 33 36, 38 27, 43 18 C 45 14, 48 11, 51 15 C 53 18, 54 24, 52 29 C 55 24, 58 12, 63 15 C 66 18, 65 26, 62 33 C 71 35, 78 40, 84 48 C 88 53, 89 60, 82 64 C 77 67, 72 65, 68 62 C 65 67, 58 72, 54 75 C 48 80, 42 85, 28 85 Z" />
-          {/* Subtle eye and bridle detail */}
-          <circle cx="62" cy="46" r="2.5" fill="#121316" />
-          <path d="M 50 33 Q 63 43 72 58" stroke="#121316" strokeWidth="1.5" fill="none" opacity="0.6" />
-        </svg>
-      </div>
+    <div className={`inline-flex items-center gap-2.5 sm:gap-3.5 group cursor-pointer ${className}`}>
+      {/* Official Circular Gold HC + Horse Emblem */}
+      <img
+        src="/images/logo/horse-county-emblem.png"
+        alt="HORSE COUNTY Emblem"
+        className={`${iconSizes[size]} object-contain rounded-full drop-shadow-[0_2px_8px_rgba(212,175,55,0.3)] transition-transform duration-300 group-hover:scale-105 shrink-0`}
+        loading="eager"
+      />
 
-      <div className="flex flex-col leading-tight">
-        <span className={`text-[#fcf9f2] uppercase ${titleSizes[size]} group-hover:text-[#d4af37] transition-colors duration-300`}>
-          {FARM_CONFIG.name}
+      {/* Official Typography Lockup: HORSE COUNTY + Tagline */}
+      <div className="flex flex-col justify-center leading-none select-none">
+        <span className={`font-serif font-black uppercase text-white gold-gradient-text transition-colors duration-300 ${titleSizes[size]}`}>
+          HORSE COUNTY
         </span>
-        <span className={`text-[#c5a059] uppercase font-light ${subtitleSizes[size]}`}>
-          EQUESTRIAN
+        <span className={`uppercase font-medium text-[#c5a059] mt-1 sm:mt-1.5 ${taglineSizes[size]}`}>
+          HORSES • HERITAGE • PASSION
         </span>
       </div>
     </div>
@@ -59,7 +57,11 @@ export default function BrandLogo({ size = 'md', withLink = true, className = ''
 
   if (withLink) {
     return (
-      <Link href="/" aria-label={`${FARM_CONFIG.name} Home`}>
+      <Link
+        href="/"
+        aria-label="HORSE COUNTY Home"
+        className="inline-flex items-center focus:outline-none focus-visible:ring-1 focus-visible:ring-[#d4af37] rounded-lg"
+      >
         {content}
       </Link>
     );

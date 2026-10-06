@@ -62,7 +62,7 @@ export default function Navbar({ onOpenAI }: NavbarProps) {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Left: Brand Logo */}
+            {/* Left: Official HORSE COUNTY Logo Lockup */}
             <BrandLogo size="md" />
 
             {/* Desktop Navigation */}
@@ -104,7 +104,11 @@ export default function Navbar({ onOpenAI }: NavbarProps) {
                 onClick={handleAIClick}
                 className="group relative flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa8222] shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_25px_rgba(212,175,55,0.6)] transform hover:scale-[1.02] transition-all duration-300"
               >
-                <span className="text-sm">🐎</span>
+                <img
+                  src="/images/logo/horse-county-emblem.png"
+                  alt="HC"
+                  className="w-4 h-4 rounded-full object-contain shrink-0 shadow-sm"
+                />
                 <span>Ask AI</span>
                 <Sparkles className="w-3.5 h-3.5 text-black animate-pulse" />
               </button>
@@ -115,10 +119,14 @@ export default function Navbar({ onOpenAI }: NavbarProps) {
               <button
                 type="button"
                 onClick={handleAIClick}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold text-black bg-gradient-to-r from-[#f3e5ab] to-[#d4af37] touch-manipulation cursor-pointer active:scale-95 transition-transform"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-black bg-gradient-to-r from-[#f3e5ab] to-[#d4af37] touch-manipulation cursor-pointer active:scale-95 transition-transform"
                 aria-label="Ask AI Assistant"
               >
-                <span>🐎</span>
+                <img
+                  src="/images/logo/horse-county-emblem.png"
+                  alt="HC"
+                  className="w-4 h-4 rounded-full object-contain shrink-0"
+                />
                 <span>AI</span>
               </button>
 
@@ -145,7 +153,7 @@ export default function Navbar({ onOpenAI }: NavbarProps) {
           <div className="relative z-10 w-[85%] max-w-sm h-full bg-[#0d0e12] border-l border-[#d4af37]/30 p-6 flex flex-col justify-between shadow-2xl overflow-y-auto">
             <div>
               <div className="flex items-center justify-between pb-6 border-b border-white/10">
-                <BrandLogo size="sm" withLink={false} />
+                <BrandLogo size="sm" withLink={true} />
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
@@ -196,12 +204,16 @@ export default function Navbar({ onOpenAI }: NavbarProps) {
                 }}
                 className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa8222] shadow-lg"
               >
-                <span className="text-base">🐎</span>
+                <img
+                  src="/images/logo/horse-county-emblem.png"
+                  alt="HC"
+                  className="w-5 h-5 rounded-full object-contain shrink-0 shadow-sm"
+                />
                 <span>Ask AI Assistant</span>
               </button>
 
-              <div className="text-center pt-2 text-[11px] text-gray-500">
-                {FARM_CONFIG.tagline}
+              <div className="text-center pt-2 text-[10px] tracking-[0.25em] uppercase text-[#c5a059]/80 font-medium">
+                HORSES • HERITAGE • PASSION
               </div>
             </div>
           </div>

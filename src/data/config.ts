@@ -1,8 +1,8 @@
 export const FARM_CONFIG = {
   // Central Farm Brand Identity - easily editable in this single file
-  name: "ROYAL MARWAR EQUESTRIAN",
-  shortName: "ROYAL MARWAR",
-  tagline: "EQUESTRIAN • HORSES • PASSION • LEGACY",
+  name: "HORSE COUNTY",
+  shortName: "HORSE COUNTY",
+  tagline: "HORSES • HERITAGE • PASSION",
   subTagline: "Passion. Care. Excellence.",
   establishedYear: "1988",
   location: "Marwar Heritage Valley, Jodhpur, Rajasthan, India",

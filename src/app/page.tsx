@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { FARM_CONFIG } from '@/data/config';
 import { HORSES_DATA, getFeaturedHorses } from '@/data/horses';
-import { INSTAGRAM_POSTS } from '@/data/instagram';
 import HorseCard from '@/components/HorseCard';
 import SectionHeading from '@/components/SectionHeading';
+import FarmGallery from '@/components/FarmGallery';
 import {
   ShieldCheck,
   Award,
@@ -16,10 +16,29 @@ import {
   Sparkles,
   Users,
   Clock,
-  Play,
+  Camera,
   CheckCircle2
 } from 'lucide-react';
-import { InstagramIcon } from '@/components/SocialIcons';
+
+import HomeHero from '@/components/HomeHero';
+
+// =========================================================================
+// YOG MAYA RANGE - PERMANENT FARM PHOTO GALLERY
+// Easy-to-edit image data structure: Add, remove, or update image paths below.
+// Place your farm photos into the /public/images/gallery/ directory.
+// =========================================================================
+const galleryImages = [
+  "/images/gallery/farm-1.jpg",
+  "/images/gallery/farm-2.jpg",
+  "/images/gallery/farm-3.jpg",
+  "/images/gallery/farm-4.jpg",
+  "/images/gallery/farm-5.jpg",
+  "/images/gallery/farm-6.jpg",
+  "/images/gallery/farm-7.jpg",
+  "/images/gallery/farm-8.jpg",
+  "/images/gallery/farm-9.jpg"
+];
+
 
 export default function HomePage() {
   const featuredHorses = getFeaturedHorses();
@@ -103,68 +122,9 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col w-full overflow-hidden">
-      {/* 1. CINEMATIC HERO SECTION */}
-      <section className="relative min-h-[92vh] sm:min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
-        {/* Full-bleed background with dark overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/farm/hero-bg.jpg"
-            alt={`${FARM_CONFIG.name} Estate`}
-            className="w-full h-full object-cover object-center filter brightness-[0.4] transform scale-105 animate-pulse-glow"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07080a] via-[#07080a]/60 to-black/70" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#07080a_90%)]" />
-        </div>
+      {/* 1. CINEMATIC FULL-SCREEN HORSE VIDEO HERO SECTION */}
+      <HomeHero />
 
-        {/* Ambient Gold Radial Flare */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#d4af37]/15 rounded-full blur-[140px] pointer-events-none" />
-
-        {/* Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
-          {/* Royal Tagline Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-[0.3em] uppercase text-[#f3e5ab] bg-[#d4af37]/15 border border-[#d4af37]/40 mb-6 backdrop-blur-md shadow-[0_0_25px_rgba(212,175,55,0.2)]">
-            <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span>{FARM_CONFIG.tagline}</span>
-            <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-          </div>
-
-          {/* Main Cinematic Heading */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white uppercase drop-shadow-2xl font-serif">
-            Where Passion <br />
-            <span className="gold-gradient-text">Meets The Horse</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="mt-6 text-base sm:text-xl text-gray-300 max-w-2xl font-light leading-relaxed drop-shadow">
-            {FARM_CONFIG.heroSubtitle}
-          </p>
-
-          {/* Primary Action Buttons */}
-          <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-            <Link
-              href="/horses"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl text-sm font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa8222] shadow-[0_10px_35px_rgba(212,175,55,0.4)] hover:shadow-[0_15px_45px_rgba(212,175,55,0.7)] transform hover:scale-[1.03] transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <span>Explore Horses</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
-            <Link
-              href="/buy"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl text-sm font-semibold uppercase tracking-wider text-white bg-white/5 hover:bg-white/10 border border-white/20 hover:border-[#d4af37]/60 backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <span>Enquire Now</span>
-              <ArrowUpRight className="w-4 h-4 text-[#d4af37]" />
-            </Link>
-          </div>
-
-          {/* Subtle Scroll Indicator */}
-          <div className="mt-16 flex flex-col items-center gap-2 text-gray-400 opacity-70 animate-bounce">
-            <span className="text-[10px] uppercase tracking-[0.25em]">Scroll to Discover</span>
-            <ChevronDown className="w-4 h-4 text-[#d4af37]" />
-          </div>
-        </div>
-      </section>
 
       {/* 2. STATS OVERVIEW BAR */}
       <section className="relative z-20 -mt-8 max-w-7xl mx-auto px-4 sm:px-6 w-full">
@@ -336,59 +296,44 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. INSTAGRAM PREVIEW SECTION */}
+      {/* 7. YOG MAYA RANGE PERMANENT FARM PHOTO GALLERY */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.25em] uppercase text-[#d4af37] bg-[#d4af37]/10 border border-[#d4af37]/30 mb-2">
-              <InstagramIcon className="w-3.5 h-3.5" />
-              <span>@{FARM_CONFIG.instagramUsername}</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.25em] uppercase text-[#d4af37] bg-[#d4af37]/10 border border-[#d4af37]/30 mb-3">
+              <Camera className="w-3.5 h-3.5" />
+              <span>Yog Maya Range</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              Moments from the <span className="gold-gradient-text">Sanctuary</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+              Inside <span className="gold-gradient-text">Yog Maya Range</span>
             </h2>
+            <p className="mt-3 text-sm sm:text-base text-gray-400 font-light max-w-2xl leading-relaxed">
+              A glimpse into our horses, facilities and the beautiful surroundings of Yog Maya Range.
+            </p>
           </div>
 
           <Link
-            href="/instagram"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] to-[#d4af37] hover:opacity-90 transition-opacity w-fit"
+            href="/gallery"
+            className="flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa8222] hover:opacity-90 hover:scale-105 transition-all shadow-[0_4px_20px_rgba(212,175,55,0.25)] w-fit shrink-0"
           >
-            <InstagramIcon className="w-4 h-4" />
-            <span>Follow Us on Instagram</span>
+            <span>View Full Gallery</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {INSTAGRAM_POSTS.slice(0, 6).map((post) => (
-            <Link
-              key={post.id}
-              href="/instagram"
-              className="group relative aspect-square rounded-2xl overflow-hidden glass-card border border-white/10 hover:border-[#d4af37]/50 transition-all duration-300"
-            >
-              <img
-                src={post.mediaUrl}
-                alt={post.caption}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-xs gap-1 p-2 text-center">
-                {post.type === 'reel' && (
-                  <Play className="w-6 h-6 text-[#d4af37] mb-1 fill-current" />
-                )}
-                <span className="font-semibold text-[11px]">{post.likes.toLocaleString()} likes</span>
-                <span className="text-[10px] text-gray-300 line-clamp-2">
-                  {post.caption}
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
+        {/* Permanent photo gallery grid */}
+        <FarmGallery images={galleryImages} />
       </section>
 
       {/* 8. FINAL CALL TO ACTION (CTA) */}
       <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#0a0c10] via-[#121419] to-[#07080a] border-t border-[#d4af37]/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
-          <div className="w-16 h-16 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/50 flex items-center justify-center mx-auto mb-6">
-            <span className="text-3xl">🐎</span>
+          <div className="w-16 h-16 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/50 flex items-center justify-center mx-auto mb-6 p-1">
+            <img
+              src="/images/logo/horse-county-emblem.png"
+              alt="HORSE COUNTY"
+              className="w-full h-full object-contain rounded-full drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]"
+            />
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-white capitalize font-serif tracking-tight">
