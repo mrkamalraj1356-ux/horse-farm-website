@@ -12,7 +12,9 @@ import {
   CheckCircle2,
   ShieldCheck,
   Building,
-  Plane
+  Plane,
+  Phone,
+  AlertCircle
 } from 'lucide-react';
 
 export default function ContactPage() {
@@ -21,21 +23,49 @@ export default function ContactPage() {
     mobile: '',
     whatsapp: '',
     email: '',
-    enquiryType: 'Buy a Horse',
+    enquiryType: 'General Stud Enquiry',
     horseName: '',
     message: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [refNumber, setRefNumber] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.name,
+          mobileNumber: formData.mobile,
+          whatsappNumber: formData.whatsapp,
+          email: formData.email,
+          city: 'Direct Contact Portal',
+          contactPreference: 'Phone Call',
+          experienceLevel: formData.enquiryType,
+          message: `[${formData.enquiryType}] ${formData.horseName ? `(Ref Horse: ${formData.horseName}) ` : ''}${formData.message}`
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setRefNumber(data.refNumber);
+        setIsSubmitted(true);
+      } else {
+        setErrorMsg(data.error || 'Failed to submit contact message.');
+      }
+    } catch {
+      setErrorMsg('Network error submitting contact request.');
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1000);
+    }
   };
 
   return (
@@ -44,7 +74,7 @@ export default function ContactPage() {
         <SectionHeading
           badge="Concierge Desk"
           title="Let's Connect"
-          subtitle="Reach out to our stud directors for private viewings, acquisition counsel, or pedigree lineage verification."
+          subtitle="Reach out to our stud directors and Yog Maya Range concierge for private viewings, acquisition counsel, or pedigree lineage verification."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -55,7 +85,7 @@ export default function ContactPage() {
                 Sanctuary & Stud Concierge
               </h3>
               <p className="text-xs text-gray-300 font-light leading-relaxed">
-                To maintain the tranquility of our horses and ensure absolute discretion for distinguished guests, all visits to {FARM_CONFIG.name} are arranged strictly by prior appointment.
+                To maintain the tranquility of our horses and ensure absolute discretion for distinguished guests, all visits to {FARM_CONFIG.name} and <strong>Yog Maya Range</strong> are arranged strictly by prior appointment.
               </p>
 
               <div className="space-y-4 text-xs text-gray-300 pt-2">
@@ -66,6 +96,16 @@ export default function ContactPage() {
                   <div>
                     <strong className="text-white block font-medium">Estate Address</strong>
                     <span>{FARM_CONFIG.location}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-[#d4af37]/10 text-[#d4af37]">
+                    <Phone className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <strong className="text-white block font-medium">Concierge Desk</strong>
+                    <span>{FARM_CONFIG.displayPhone}</span>
                   </div>
                 </div>
 
@@ -115,7 +155,7 @@ export default function ContactPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
                 <span className="text-xs text-[#f3e5ab] font-medium">
-                  {FARM_CONFIG.name} — Rajasthan Valley
+                  {FARM_CONFIG.name} — Yog Maya Range, Rajasthan
                 </span>
               </div>
             </div>
@@ -128,23 +168,31 @@ export default function ContactPage() {
                 <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center mx-auto mb-6">
                   <CheckCircle2 className="w-8 h-8 text-emerald-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">
+                <h3 className="text-2xl font-bold text-white mb-2 font-serif">
                   Enquiry Successfully Sent
                 </h3>
-                <p className="text-sm text-gray-300 max-w-md mx-auto mb-6">
-                  Thank you, {formData.name}. Our Equine Concierge will review your request regarding{' '}
+                <p className="text-sm text-gray-300 max-w-md mx-auto mb-4">
+                  Thank you, {formData.name}. Your dossier has been assigned Reference ID{' '}
+                  <span className="font-mono text-[#d4af37] font-bold">{refNumber}</span>. Our Equine Concierge will review your request regarding{' '}
                   <strong className="text-[#f3e5ab]">{formData.enquiryType}</strong> and connect with you promptly.
                 </p>
                 <button
                   type="button"
                   onClick={() => setIsSubmitted(false)}
-                  className="px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] to-[#d4af37]"
+                  className="px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] to-[#d4af37] cursor-pointer"
                 >
                   Send Another Message
                 </button>
               </div>
             ) : (
               <div className="glass-card rounded-3xl p-6 sm:p-10 border border-[#d4af37]/20 shadow-2xl">
+                {errorMsg && (
+                  <div className="mb-6 p-4 rounded-xl bg-rose-950/60 border border-rose-500/40 flex items-center gap-3 text-xs text-rose-300">
+                    <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
+                    <span>{errorMsg}</span>
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -157,7 +205,7 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="e.g. Yashvardhan Rathore"
-                        className="w-full bg-[#16181e] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
+                        className="w-full bg-[#14161b] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
                       />
                     </div>
                     <div>
@@ -170,7 +218,7 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="yash@heritage.com"
-                        className="w-full bg-[#16181e] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
+                        className="w-full bg-[#14161b] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
                       />
                     </div>
                   </div>
@@ -186,7 +234,7 @@ export default function ContactPage() {
                         value={formData.mobile}
                         onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                         placeholder="+91 98765 43210"
-                        className="w-full bg-[#16181e] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
+                        className="w-full bg-[#14161b] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
                       />
                     </div>
                     <div>
@@ -198,7 +246,7 @@ export default function ContactPage() {
                         value={formData.whatsapp}
                         onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                         placeholder="+91 98765 43210"
-                        className="w-full bg-[#16181e] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
+                        className="w-full bg-[#14161b] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
                       />
                     </div>
                   </div>
@@ -211,12 +259,13 @@ export default function ContactPage() {
                       <select
                         value={formData.enquiryType}
                         onChange={(e) => setFormData({ ...formData, enquiryType: e.target.value })}
-                        className="w-full bg-[#16181e] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
+                        className="w-full bg-[#14161b] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
                       >
                         <option value="Buy a Horse">Buy a Horse</option>
                         <option value="Sell Your Horse">Sell Your Horse</option>
                         <option value="Book a Horse">Book a Horse / Trial</option>
-                        <option value="General Enquiry">General Stud Enquiry</option>
+                        <option value="Yog Maya Range Farmhouse Event">Yog Maya Range Farmhouse Event</option>
+                        <option value="General Stud Enquiry">General Stud Enquiry</option>
                       </select>
                     </div>
 
@@ -229,7 +278,7 @@ export default function ContactPage() {
                         value={formData.horseName}
                         onChange={(e) => setFormData({ ...formData, horseName: e.target.value })}
                         placeholder="e.g. Sultan, Noor, Rajveer"
-                        className="w-full bg-[#16181e] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
+                        className="w-full bg-[#14161b] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
                       />
                     </div>
                   </div>
@@ -244,20 +293,20 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Please share your questions, schedule requirements, or equine preferences..."
-                      className="w-full bg-[#16181e] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
+                      className="w-full bg-[#14161b] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#d4af37]"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-4 rounded-xl text-sm font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa8222] shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:opacity-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-xl text-sm font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa8222] shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:opacity-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     {isSubmitting ? (
-                      'Transmitting...'
+                      'Transmitting Dossier...'
                     ) : (
                       <>
-                        <span>Send Enquiry</span>
+                        <span>Send Enquiry to Concierge</span>
                         <Send className="w-4 h-4" />
                       </>
                     )}

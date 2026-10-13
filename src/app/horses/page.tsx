@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { HORSES_DATA, Horse } from '@/data/horses';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Horse } from '@/lib/types';
 import HorseCard from '@/components/HorseCard';
 import SectionHeading from '@/components/SectionHeading';
 import {
@@ -10,26 +10,50 @@ import {
   X,
   RotateCcw,
   Sparkles,
+  ArrowUpDown,
   Filter
 } from 'lucide-react';
 
 export default function HorsesPage() {
+  const [horses, setHorses] = useState<Horse[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Filters State
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBreed, setSelectedBreed] = useState<string>('All');
   const [selectedGender, setSelectedGender] = useState<string>('All');
   const [selectedAge, setSelectedAge] = useState<string>('All');
   const [selectedPrice, setSelectedPrice] = useState<string>('All');
   const [selectedAvailability, setSelectedAvailability] = useState<string>('All');
+  const [sortBy, setSortBy] = useState<string>('featured');
+
+  useEffect(() => {
+    async function loadHorses() {
+      try {
+        const res = await fetch('/api/horses?status=approved');
+        if (res.ok) {
+          const data = await res.json();
+          setHorses(data.horses || []);
+        }
+      } catch (err) {
+        console.error('Error fetching horses:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadHorses();
+  }, []);
 
   const filteredHorses = useMemo(() => {
-    return HORSES_DATA.filter((horse) => {
-      // 1. Search name or breed
+    let result = horses.filter((horse) => {
+      // 1. Search Query
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const matchName = horse.name.toLowerCase().includes(q);
         const matchBreed = horse.breed.toLowerCase().includes(q);
         const matchDesc = horse.description.toLowerCase().includes(q);
-        if (!matchName && !matchBreed && !matchDesc) return false;
+        const matchLineage = horse.lineage?.toLowerCase().includes(q);
+        if (!matchName && !matchBreed && !matchDesc && !matchLineage) return false;
       }
 
       // 2. Breed
@@ -63,13 +87,28 @@ export default function HorsesPage() {
 
       return true;
     });
+
+    // Sort
+    if (sortBy === 'price-low') {
+      result.sort((a, b) => a.rawPrice - b.rawPrice);
+    } else if (sortBy === 'price-high') {
+      result.sort((a, b) => b.rawPrice - a.rawPrice);
+    } else if (sortBy === 'newest') {
+      result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else if (sortBy === 'age-young') {
+      result.sort((a, b) => a.age - b.age);
+    }
+
+    return result;
   }, [
+    horses,
     searchQuery,
     selectedBreed,
     selectedGender,
     selectedAge,
     selectedPrice,
-    selectedAvailability
+    selectedAvailability,
+    sortBy
   ]);
 
   const handleResetFilters = () => {
@@ -79,6 +118,7 @@ export default function HorsesPage() {
     setSelectedAge('All');
     setSelectedPrice('All');
     setSelectedAvailability('All');
+    setSortBy('featured');
   };
 
   const hasActiveFilters =
@@ -87,7 +127,8 @@ export default function HorsesPage() {
     selectedGender !== 'All' ||
     selectedAge !== 'All' ||
     selectedPrice !== 'All' ||
-    selectedAvailability !== 'All';
+    selectedAvailability !== 'All' ||
+    sortBy !== 'featured';
 
   return (
     <div className="pt-28 pb-24 min-h-screen">
@@ -96,31 +137,48 @@ export default function HorsesPage() {
         <SectionHeading
           badge="Purebred Pedigree"
           title="Our Horses"
-          subtitle="Explore our collection of carefully selected horses. Each horse is cataloged with verified health, ancestry records, and distinct photographic and video documentation."
+          subtitle="Explore our verified collection of noble Marwari and Kathiawari horses. Each profile includes authenticated bloodlines, veterinary certifications, and authentic media portfolios."
         />
 
         {/* Search & Filter Toolbar */}
-        <div className="glass-card rounded-2xl p-6 border border-[#d4af37]/20 shadow-xl mb-12">
-          {/* Top Row: Search Bar */}
-          <div className="relative mb-6">
-            <Search className="w-5 h-5 text-[#d4af37] absolute left-4 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by horse name (e.g. Sultan, Rajveer, Noor)..."
-              className="w-full bg-[#16181e] border border-white/10 focus:border-[#d4af37] rounded-xl pl-12 pr-10 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
-                aria-label="Clear Search"
+        <div className="glass-card rounded-2xl p-6 border border-[#d4af37]/20 shadow-xl mb-10">
+          {/* Top Row: Search Bar & Sort Dropdown */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6">
+            <div className="md:col-span-8 relative">
+              <Search className="w-5 h-5 text-[#d4af37] absolute left-4 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by horse name (e.g. Sultan, Rajveer, Noor), breed, or lineage..."
+                className="w-full bg-[#14161b] border border-white/10 focus:border-[#d4af37] rounded-xl pl-12 pr-10 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                  aria-label="Clear Search"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            <div className="md:col-span-4 flex items-center gap-2">
+              <ArrowUpDown className="w-4 h-4 text-[#d4af37] shrink-0" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="w-full bg-[#14161b] border border-white/10 rounded-xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[#d4af37]"
               >
-                <X className="w-4 h-4" />
-              </button>
-            )}
+                <option value="featured">Sort: Featured Collection</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="newest">Newest Listed</option>
+                <option value="age-young">Age: Youngest First</option>
+              </select>
+            </div>
           </div>
 
           {/* Filter Selects Grid */}
@@ -133,11 +191,12 @@ export default function HorsesPage() {
               <select
                 value={selectedBreed}
                 onChange={(e) => setSelectedBreed(e.target.value)}
-                className="w-full bg-[#16181e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
+                className="w-full bg-[#14161b] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
               >
                 <option value="All">All Breeds</option>
-                <option value="Marwari">Marwari</option>
+                <option value="Marwari">Purebred Marwari</option>
                 <option value="Kathiawari">Kathiawari</option>
+                <option value="Thoroughbred">Thoroughbred</option>
               </select>
             </div>
 
@@ -149,11 +208,11 @@ export default function HorsesPage() {
               <select
                 value={selectedGender}
                 onChange={(e) => setSelectedGender(e.target.value)}
-                className="w-full bg-[#16181e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
+                className="w-full bg-[#14161b] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
               >
                 <option value="All">All Genders</option>
-                <option value="Male">Male (Stallion)</option>
-                <option value="Female">Female (Mare/Filly)</option>
+                <option value="Male">Stallion (Male)</option>
+                <option value="Female">Mare / Filly (Female)</option>
               </select>
             </div>
 
@@ -165,12 +224,12 @@ export default function HorsesPage() {
               <select
                 value={selectedAge}
                 onChange={(e) => setSelectedAge(e.target.value)}
-                className="w-full bg-[#16181e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
+                className="w-full bg-[#14161b] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
               >
                 <option value="All">All Ages</option>
-                <option value="Young (3-4)">3 - 4 Years</option>
-                <option value="Prime (5-6)">5 - 6 Years</option>
-                <option value="Mature (7+)">7+ Years</option>
+                <option value="Young (3-4)">Young (3 - 4 Years)</option>
+                <option value="Prime (5-6)">Prime (5 - 6 Years)</option>
+                <option value="Mature (7+)">Mature (7+ Years)</option>
               </select>
             </div>
 
@@ -182,7 +241,7 @@ export default function HorsesPage() {
               <select
                 value={selectedPrice}
                 onChange={(e) => setSelectedPrice(e.target.value)}
-                className="w-full bg-[#16181e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
+                className="w-full bg-[#14161b] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
               >
                 <option value="All">All Valuations</option>
                 <option value="< 2.5L">Under ₹2.5 Lakh</option>
@@ -199,7 +258,7 @@ export default function HorsesPage() {
               <select
                 value={selectedAvailability}
                 onChange={(e) => setSelectedAvailability(e.target.value)}
-                className="w-full bg-[#16181e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
+                className="w-full bg-[#14161b] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37]"
               >
                 <option value="All">All Statuses</option>
                 <option value="Available">Available</option>
@@ -212,10 +271,10 @@ export default function HorsesPage() {
           {/* Bottom Filter Status Bar */}
           <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs">
             <div className="flex items-center gap-2 text-gray-300">
-              <span className="font-semibold text-[#d4af37]">{filteredHorses.length}</span>
+              <span className="font-bold text-[#d4af37] text-sm">{filteredHorses.length}</span>
               <span>horses match your criteria</span>
               <span className="text-gray-600">•</span>
-              <span className="text-gray-400">Strict individual horse media verification active</span>
+              <span className="text-gray-400 text-[11px]">Certified individual horse media verification active</span>
             </div>
 
             {hasActiveFilters && (
@@ -231,8 +290,14 @@ export default function HorsesPage() {
           </div>
         </div>
 
-        {/* Results Grid */}
-        {filteredHorses.length > 0 ? (
+        {/* Results Grid / Loading State */}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="rounded-2xl bg-white/5 border border-white/10 aspect-[3/4] animate-pulse" />
+            ))}
+          </div>
+        ) : filteredHorses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredHorses.map((horse) => (
               <HorseCard key={horse.id} horse={horse} />
@@ -245,9 +310,9 @@ export default function HorsesPage() {
               alt="HORSE COUNTY"
               className="w-12 h-12 object-contain rounded-full mx-auto mb-4 drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]"
             />
-            <h3 className="text-xl font-bold text-white mb-2">No Horses Match These Filters</h3>
+            <h3 className="text-xl font-bold text-white mb-2 font-serif">No Horses Match These Filters</h3>
             <p className="text-xs text-gray-400 mb-6 leading-relaxed">
-              We couldn't find any horses matching your exact search. Try adjusting your breed, price bracket, or age criteria.
+              We couldn&apos;t find any horses matching your exact search. Try adjusting your breed, price bracket, or age criteria.
             </p>
             <button
               type="button"

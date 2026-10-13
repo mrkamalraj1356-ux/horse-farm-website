@@ -3,25 +3,23 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { HORSES_DATA, Horse } from '@/data/horses';
-import { FARM_CONFIG } from '@/data/config';
+import { Horse } from '@/lib/types';
 import SectionHeading from '@/components/SectionHeading';
 import {
   CheckCircle2,
   ShieldCheck,
   Send,
-  Sparkles,
-  Phone,
-  MessageSquare,
-  Mail,
   ArrowRight,
-  RotateCcw
+  Phone,
+  Mail,
+  AlertCircle
 } from 'lucide-react';
 
 function BuyHorseFormContent() {
   const searchParams = useSearchParams();
   const preselectedHorseId = searchParams.get('horse') || '';
 
+  const [horses, setHorses] = useState<Horse[]>([]);
   const [formData, setFormData] = useState({
     fullName: '',
     mobileNumber: '',
@@ -29,7 +27,7 @@ function BuyHorseFormContent() {
     email: '',
     city: '',
     selectedHorseId: preselectedHorseId,
-    contactPreference: 'WhatsApp',
+    contactPreference: 'WhatsApp' as 'WhatsApp' | 'Phone Call' | 'Email',
     experienceLevel: 'Experienced Rider',
     message: ''
   });
@@ -37,6 +35,22 @@ function BuyHorseFormContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [referenceNumber, setReferenceNumber] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    async function fetchHorses() {
+      try {
+        const res = await fetch('/api/horses?status=approved');
+        if (res.ok) {
+          const data = await res.json();
+          setHorses(data.horses || []);
+        }
+      } catch (err) {
+        console.error('Error fetching horses:', err);
+      }
+    }
+    fetchHorses();
+  }, []);
 
   useEffect(() => {
     if (preselectedHorseId) {
@@ -44,19 +58,35 @@ function BuyHorseFormContent() {
     }
   }, [preselectedHorseId]);
 
-  const selectedHorse = HORSES_DATA.find(
+  const selectedHorse = horses.find(
     (h) => h.id.toLowerCase() === formData.selectedHorseId.toLowerCase()
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg('');
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setReferenceNumber(data.refNumber);
+        setIsSubmitted(true);
+      } else {
+        setErrorMsg(data.error || 'Failed to submit enquiry. Please verify details.');
+      }
+    } catch {
+      setErrorMsg('Network error submitting enquiry. Please try again.');
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-      setReferenceNumber(`EQ-${Math.floor(100000 + Math.random() * 900000)}`);
-    }, 1000);
+    }
   };
 
   const handleReset = () => {
@@ -72,6 +102,7 @@ function BuyHorseFormContent() {
       message: ''
     });
     setIsSubmitted(false);
+    setErrorMsg('');
   };
 
   return (
@@ -79,8 +110,8 @@ function BuyHorseFormContent() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="Direct Acquisition"
-          title="Find Your Perfect Horse"
-          subtitle="Submit your acquisition enquiry. Our discreet stud concierge handles all ownership transfers, veterinary inspections, and private trials."
+          title="Acquisition Enquiry"
+          subtitle="Submit your acquisition enquiry. Our discreet stud concierge handles ownership transfers, pedigree registry certificates, and private trials."
         />
 
         {/* Success Confirmation State */}
@@ -93,19 +124,19 @@ function BuyHorseFormContent() {
             </div>
 
             <span className="text-xs uppercase tracking-[0.25em] text-[#d4af37] font-semibold">
-              Enquiry Confirmed
+              Enquiry Formally Registered
             </span>
 
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-2 mb-3">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-2 mb-3 font-serif">
               Thank you, {formData.fullName}.
             </h3>
 
             <p className="text-base text-gray-300 max-w-lg mx-auto mb-6 leading-relaxed">
-              Your enquiry has been received. Our team will contact you shortly via {formData.contactPreference} to discuss {selectedHorse ? selectedHorse.name : 'your chosen horse'} and arrange next steps.
+              Your acquisition dossier has been logged into our concierge management system. Our Stud Director will contact you via {formData.contactPreference} within 24 business hours.
             </p>
 
             {/* Reference Receipt Card */}
-            <div className="max-w-md mx-auto p-5 rounded-2xl bg-black/60 border border-white/10 text-left text-xs mb-8 space-y-2">
+            <div className="max-w-md mx-auto p-5 rounded-2xl bg-black/60 border border-white/10 text-left text-xs mb-8 space-y-2.5">
               <div className="flex justify-between border-b border-white/10 pb-2">
                 <span className="text-gray-400">Reference Number:</span>
                 <span className="text-[#f3e5ab] font-mono font-bold">{referenceNumber}</span>
@@ -113,15 +144,15 @@ function BuyHorseFormContent() {
               <div className="flex justify-between border-b border-white/10 pb-2">
                 <span className="text-gray-400">Horse Inquired:</span>
                 <span className="text-white font-medium">
-                  {selectedHorse ? `${selectedHorse.name} (${selectedHorse.breed})` : 'General Acquisition'}
+                  {selectedHorse ? `${selectedHorse.name} (${selectedHorse.breed})` : 'General Stud Stock'}
                 </span>
               </div>
               <div className="flex justify-between border-b border-white/10 pb-2">
                 <span className="text-gray-400">Preferred Channel:</span>
-                <span className="text-white">{formData.contactPreference}</span>
+                <span className="text-white">{formData.contactPreference} ({formData.mobileNumber})</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Target Location:</span>
+                <span className="text-gray-400">Location:</span>
                 <span className="text-white">{formData.city || 'India'}</span>
               </div>
             </div>
@@ -129,14 +160,14 @@ function BuyHorseFormContent() {
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/horses"
-                className="px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] to-[#d4af37]"
+                className="px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] to-[#d4af37]"
               >
                 Browse Other Horses
               </Link>
               <button
                 type="button"
                 onClick={handleReset}
-                className="px-6 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white bg-white/5 border border-white/10 hover:border-white/30"
+                className="px-6 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white bg-white/5 border border-white/10 hover:border-white/30 cursor-pointer"
               >
                 Submit Another Enquiry
               </button>
@@ -145,24 +176,31 @@ function BuyHorseFormContent() {
         ) : (
           /* Main Interactive Enquiry Form */
           <div className="glass-card rounded-3xl p-6 sm:p-10 border border-[#d4af37]/20 shadow-2xl relative">
+            {errorMsg && (
+              <div className="mb-6 p-4 rounded-xl bg-rose-950/60 border border-rose-500/40 flex items-center gap-3 text-xs text-rose-300">
+                <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
+
             {/* Selected Horse Quick Glance if active */}
             {selectedHorse && (
-              <div className="mb-8 p-4 rounded-2xl bg-[#16181e] border border-[#d4af37]/30 flex items-center justify-between gap-4">
+              <div className="mb-8 p-4 rounded-2xl bg-[#14161c] border border-[#d4af37]/30 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <img
-                    src={selectedHorse.images[0]}
+                    src={selectedHorse.images?.[0] || `/horses/${selectedHorse.id}/${selectedHorse.id}-1.jpg`}
                     alt={selectedHorse.name}
                     className="w-14 h-14 rounded-xl object-cover border border-[#d4af37]/50"
                   />
                   <div>
-                    <div className="text-xs text-[#d4af37] font-semibold uppercase tracking-wider">
-                      Selected Candidate
+                    <div className="text-[10px] text-[#d4af37] font-semibold uppercase tracking-wider">
+                      Selected Horse
                     </div>
-                    <div className="text-lg font-bold text-white">
+                    <div className="text-lg font-bold text-white font-serif">
                       {selectedHorse.name}
                     </div>
                     <div className="text-xs text-gray-400">
-                      {selectedHorse.breed} • {selectedHorse.ageDisplay} • {selectedHorse.price}
+                      {selectedHorse.breed} • {selectedHorse.ageDisplay || `${selectedHorse.age} Years`} • {selectedHorse.price}
                     </div>
                   </div>
                 </div>
@@ -171,7 +209,7 @@ function BuyHorseFormContent() {
                   href={`/horses/${selectedHorse.id}`}
                   className="text-xs text-[#d4af37] hover:underline hidden sm:block"
                 >
-                  View Full Profile →
+                  View Profile →
                 </Link>
               </div>
             )}
@@ -189,7 +227,7 @@ function BuyHorseFormContent() {
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="e.g. Maharaja Vikram Singh"
-                    className="w-full bg-[#16181e] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
+                    className="w-full bg-[#14161b] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -204,7 +242,7 @@ function BuyHorseFormContent() {
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                     placeholder="e.g. Jaipur, Rajasthan"
-                    className="w-full bg-[#16181e] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
+                    className="w-full bg-[#14161b] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -221,7 +259,7 @@ function BuyHorseFormContent() {
                     value={formData.mobileNumber}
                     onChange={(e) => setFormData({ ...formData, mobileNumber: e.target.value })}
                     placeholder="+91 98765 43210"
-                    className="w-full bg-[#16181e] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
+                    className="w-full bg-[#14161b] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -235,7 +273,7 @@ function BuyHorseFormContent() {
                     value={formData.whatsappNumber}
                     onChange={(e) => setFormData({ ...formData, whatsappNumber: e.target.value })}
                     placeholder="+91 98765 43210"
-                    className="w-full bg-[#16181e] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
+                    className="w-full bg-[#14161b] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -250,7 +288,7 @@ function BuyHorseFormContent() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="vikram@estate.in"
-                    className="w-full bg-[#16181e] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
+                    className="w-full bg-[#14161b] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -259,18 +297,17 @@ function BuyHorseFormContent() {
                 {/* Select Horse */}
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-2">
-                    Select Horse <span className="text-[#d4af37]">*</span>
+                    Select Horse from Collection
                   </label>
                   <select
-                    required
                     value={formData.selectedHorseId}
                     onChange={(e) => setFormData({ ...formData, selectedHorseId: e.target.value })}
-                    className="w-full bg-[#16181e] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
+                    className="w-full bg-[#14161b] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
                   >
-                    <option value="">-- Choose a Horse from Collection --</option>
-                    {HORSES_DATA.map((h) => (
+                    <option value="">-- General Stud Inquiry --</option>
+                    {horses.map((h) => (
                       <option key={h.id} value={h.id}>
-                        {h.name} — {h.breed} ({h.ageDisplay}, {h.price}) [{h.availability}]
+                        {h.name} — {h.breed} ({h.ageDisplay || `${h.age} Yrs`}, {h.price}) [{h.availability}]
                       </option>
                     ))}
                   </select>
@@ -282,15 +319,15 @@ function BuyHorseFormContent() {
                     Preferred Contact Channel
                   </label>
                   <div className="grid grid-cols-3 gap-2">
-                    {['WhatsApp', 'Phone Call', 'Email'].map((method) => (
+                    {(['WhatsApp', 'Phone Call', 'Email'] as const).map((method) => (
                       <button
                         key={method}
                         type="button"
                         onClick={() => setFormData({ ...formData, contactPreference: method })}
-                        className={`py-3 px-2 rounded-xl text-xs font-medium border text-center transition-all ${
+                        className={`py-3 px-2 rounded-xl text-xs font-medium border text-center transition-all cursor-pointer ${
                           formData.contactPreference === method
                             ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#f3e5ab] font-semibold'
-                            : 'bg-[#16181e] border-white/10 text-gray-400 hover:text-white'
+                            : 'bg-[#14161b] border-white/10 text-gray-400 hover:text-white'
                         }`}
                       >
                         {method}
@@ -303,22 +340,22 @@ function BuyHorseFormContent() {
               {/* Message */}
               <div>
                 <label className="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-2">
-                  Message / Special Requirements
+                  Message / Specific Requirements
                 </label>
                 <textarea
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell us about your equestrian requirements, stable arrangements, or if you wish to book an on-site veterinary trial..."
-                  className="w-full bg-[#16181e] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
+                  placeholder="Tell us about your stable facilities, intended riding discipline, breeding program, or request veterinary inspection radiographs..."
+                  className="w-full bg-[#14161b] border border-white/10 focus:border-[#d4af37] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
                 />
               </div>
 
-              {/* Concierge Privacy Notice */}
+              {/* Privacy Notice */}
               <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3 text-xs text-gray-400">
                 <ShieldCheck className="w-5 h-5 text-[#d4af37] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-gray-300">Confidentiality Guarantee:</strong> Owner
+                  <strong className="text-gray-300">Confidentiality Protocol:</strong> Owner
                   and client identity details are kept strictly private. Your enquiry is transmitted
                   directly to the Chief Stud Director.
                 </div>
@@ -329,13 +366,13 @@ function BuyHorseFormContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 rounded-xl text-sm font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa8222] shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:shadow-[0_15px_45px_rgba(212,175,55,0.6)] transform hover:scale-[1.01] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-4 rounded-xl text-sm font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa8222] shadow-[0_10px_30px_rgba(212,175,55,0.4)] hover:shadow-[0_15px_45px_rgba(212,175,55,0.6)] transform hover:scale-[1.01] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmitting ? (
-                    <span>Submitting Enquiry...</span>
+                    <span>Submitting Dossier...</span>
                   ) : (
                     <>
-                      <span>Submit Buy Enquiry</span>
+                      <span>Submit Acquisition Enquiry</span>
                       <Send className="w-4 h-4" />
                     </>
                   )}

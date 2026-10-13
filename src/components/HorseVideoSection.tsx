@@ -7,11 +7,9 @@ import {
   Maximize,
   Volume2,
   VolumeX,
-  Video as VideoIcon,
-  Sparkles,
   Film
 } from 'lucide-react';
-import { Horse } from '@/data/horses';
+import { Horse } from '@/lib/types';
 import { getYouTubeEmbedUrl, isYouTubeUrl } from '@/utils/media';
 
 interface HorseVideoSectionProps {
@@ -20,8 +18,8 @@ interface HorseVideoSectionProps {
 
 export default function HorseVideoSection({ horse }: HorseVideoSectionProps) {
   // Strict media validation: accept videos that belong to this horse or are valid video URLs
-  const validVideos = horse.videos.filter(
-    (v) => v.src.includes(`/horses/${horse.id}/`) || isYouTubeUrl(v.src) || v.src.length > 0
+  const validVideos = (horse.videos || []).filter(
+    (v) => v.src && (v.src.includes(`/horses/${horse.id}/`) || isYouTubeUrl(v.src) || v.src.length > 0)
   );
 
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
@@ -66,7 +64,7 @@ export default function HorseVideoSection({ horse }: HorseVideoSectionProps) {
           <span className="text-xs uppercase tracking-[0.25em] text-[#d4af37] font-semibold">
             Equine Cinematography
           </span>
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mt-2 mb-3">
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mt-2 mb-3 font-serif">
             Watch {horse.name} in Action
           </h3>
           <p className="text-sm text-gray-300 max-w-lg mx-auto mb-6">
@@ -74,7 +72,7 @@ export default function HorseVideoSection({ horse }: HorseVideoSectionProps) {
           </p>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs text-gray-400">
             <span className="w-2 h-2 rounded-full bg-[#d4af37] animate-ping" />
-            <span>Strict Media Rule: We never substitute other horses' clips</span>
+            <span>Strict Media Rule: We never substitute other horses&apos; clips</span>
           </div>
         </div>
       </section>
@@ -90,11 +88,11 @@ export default function HorseVideoSection({ horse }: HorseVideoSectionProps) {
             <span>Cinematic Motion Footage</span>
             <span>❖</span>
           </div>
-          <h3 className="text-3xl sm:text-4xl font-extrabold text-white">
+          <h3 className="text-3xl sm:text-4xl font-extrabold text-white font-serif">
             Watch <span className="gold-gradient-text">{horse.name}</span> in Action
           </h3>
           <p className="text-xs sm:text-sm text-gray-400 mt-2 max-w-xl font-light">
-            Pure, unedited cadence and performance showcasing {horse.name}’s natural gait, headset, and responsive temperament under our master trainers.
+            Pure, unedited cadence and performance showcasing {horse.name}&apos;s natural gait, headset, and responsive temperament under our master trainers.
           </p>
         </div>
 
@@ -103,7 +101,7 @@ export default function HorseVideoSection({ horse }: HorseVideoSectionProps) {
           <div className="flex items-center gap-2 bg-black/40 p-1 rounded-xl border border-white/10">
             {validVideos.map((vid, idx) => (
               <button
-                key={vid.id}
+                key={vid.id || idx}
                 type="button"
                 onClick={() => {
                   setActiveVideoIndex(idx);
@@ -158,7 +156,7 @@ export default function HorseVideoSection({ horse }: HorseVideoSectionProps) {
               <button
                 type="button"
                 onClick={handlePlayToggle}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-20 h-20 rounded-full bg-gradient-to-tr from-[#d4af37] to-[#f3e5ab] text-black flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.6)] transform hover:scale-110 transition-all duration-300"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-20 h-20 rounded-full bg-gradient-to-tr from-[#d4af37] to-[#f3e5ab] text-black flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.6)] transform hover:scale-110 transition-all duration-300 cursor-pointer"
                 aria-label="Play Video"
               >
                 <Play className="w-8 h-8 ml-1 fill-black" />
@@ -171,7 +169,7 @@ export default function HorseVideoSection({ horse }: HorseVideoSectionProps) {
                 <button
                   type="button"
                   onClick={handlePlayToggle}
-                  className="p-1.5 rounded-lg text-white hover:text-[#d4af37] transition-colors"
+                  className="p-1.5 rounded-lg text-white hover:text-[#d4af37] transition-colors cursor-pointer"
                   aria-label={isPlaying ? 'Pause' : 'Play'}
                 >
                   {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
@@ -180,15 +178,17 @@ export default function HorseVideoSection({ horse }: HorseVideoSectionProps) {
                 <button
                   type="button"
                   onClick={handleMuteToggle}
-                  className="p-1.5 rounded-lg text-gray-300 hover:text-white transition-colors"
+                  className="p-1.5 rounded-lg text-gray-300 hover:text-white transition-colors cursor-pointer"
                   aria-label={isMuted ? 'Unmute' : 'Mute'}
                 >
                   {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                 </button>
 
-                <span className="text-xs text-gray-400 font-mono">
-                  {currentVideo.duration}
-                </span>
+                {currentVideo.duration && (
+                  <span className="text-xs text-gray-400 font-mono">
+                    {currentVideo.duration}
+                  </span>
+                )}
               </div>
 
               <div className="text-xs text-gray-300 hidden sm:block truncate max-w-md">
@@ -199,7 +199,7 @@ export default function HorseVideoSection({ horse }: HorseVideoSectionProps) {
                 <button
                   type="button"
                   onClick={handleFullscreen}
-                  className="p-1.5 rounded-lg text-gray-300 hover:text-white transition-colors"
+                  className="p-1.5 rounded-lg text-gray-300 hover:text-white transition-colors cursor-pointer"
                   title="Fullscreen"
                   aria-label="Fullscreen"
                 >

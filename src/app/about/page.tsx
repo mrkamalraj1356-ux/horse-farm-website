@@ -10,8 +10,14 @@ import {
   CheckCircle2,
   Users,
   Compass,
-  ArrowRight
+  ArrowRight,
+  Building2
 } from 'lucide-react';
+
+export const metadata = {
+  title: `About Our Sanctuary & Yog Maya Range | ${FARM_CONFIG.name}`,
+  description: `Learn about ${FARM_CONFIG.name} and the historic Yog Maya Range estate in Jodhpur, Rajasthan. Dedicated to preserving purebred Marwari and Kathiawari horse bloodlines.`
+};
 
 export default function AboutPage() {
   const facilities = [
@@ -58,8 +64,8 @@ export default function AboutPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="Royal Heritage"
-          title="About Our Sanctuary"
-          subtitle="A legacy founded on unconditional reverence for India's legendary warhorse breeds, blending historic chivalry with progressive 21st-century equine science."
+          title="About Horse County"
+          subtitle="A legacy founded on unconditional reverence for India's legendary warhorse breeds, blending historic chivalry with progressive 21st-century equine science at Yog Maya Range."
         />
 
         {/* Section 1: Our Story */}
@@ -72,23 +78,23 @@ export default function AboutPage() {
               Preserving the Courageous Steeds of Kings
             </h3>
             <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-light">
-              Founded in {FARM_CONFIG.establishedYear}, {FARM_CONFIG.name} was established with a singular devotion: to preserve and elevate the purebred Marwari and Kathiawari horse breeds. For millennia, these noble horses carried Rajput warriors through impossible desert battles, famed for their supernatural loyalty, acute hearing, and inward-curling ears that touch in an iconic lyrical arch.
+              Founded in {FARM_CONFIG.establishedYear}, <strong>{FARM_CONFIG.name}</strong> was established with a singular devotion: to preserve and elevate the purebred Marwari and Kathiawari horse breeds. For millennia, these noble horses carried Rajput warriors through impossible desert battles, famed for their supernatural loyalty, acute hearing, and inward-curling ears that touch in an iconic lyrical arch.
             </p>
             <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-light">
-              Today, our 150-acre sanctuary in Rajasthan stands as an internationally recognized center of breeding excellence. We operate with strict pedigree registries, verified microchips, and an uncompromising code of ethical, positive horsemanship.
+              Today, our 150-acre sanctuary at <strong>Yog Maya Range</strong> in Jodhpur, Rajasthan stands as an internationally recognized center of breeding excellence. We operate with strict pedigree registries, verified microchips, and an uncompromising code of ethical, positive horsemanship.
             </p>
 
             <div className="pt-2 flex items-center gap-4">
               <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center flex-1">
-                <span className="text-2xl font-bold gold-gradient-text block">35+</span>
+                <span className="text-2xl font-bold gold-gradient-text block font-serif">35+</span>
                 <span className="text-[11px] text-gray-400 uppercase tracking-wider">Years Active</span>
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center flex-1">
-                <span className="text-2xl font-bold gold-gradient-text block">140+</span>
+                <span className="text-2xl font-bold gold-gradient-text block font-serif">140+</span>
                 <span className="text-[11px] text-gray-400 uppercase tracking-wider">Foals Reared</span>
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center flex-1">
-                <span className="text-2xl font-bold gold-gradient-text block">100%</span>
+                <span className="text-2xl font-bold gold-gradient-text block font-serif">100%</span>
                 <span className="text-[11px] text-gray-400 uppercase tracking-wider">Soundness</span>
               </div>
             </div>
@@ -97,7 +103,7 @@ export default function AboutPage() {
           <div className="relative aspect-[4/3] rounded-3xl overflow-hidden glass-card border border-[#d4af37]/30 shadow-2xl">
             <img
               src="/farm/heritage.jpg"
-              alt="Marwar Royal Horse Heritage"
+              alt="Marwar Royal Horse Heritage at Yog Maya Range"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
@@ -105,8 +111,8 @@ export default function AboutPage() {
               <span className="text-xs uppercase tracking-widest text-[#d4af37] font-semibold">
                 Archival Sanctuary Heritage
               </span>
-              <h4 className="text-xl font-bold text-white mt-1">
-                Rajasthan Marwar Heritage Valley
+              <h4 className="text-xl font-bold text-white mt-1 font-serif">
+                Yog Maya Range — Jodhpur, Rajasthan
               </h4>
             </div>
           </div>
@@ -152,7 +158,7 @@ export default function AboutPage() {
           <SectionHeading
             badge="Estate Infrastructure"
             title="World-Class Facilities"
-            subtitle="Engineered to royal specifications for supreme athletic conditioning, rehabilitation, and equine contentment."
+            subtitle="Engineered to royal specifications for supreme athletic conditioning, rehabilitation, and equine contentment at Yog Maya Range."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -169,7 +175,7 @@ export default function AboutPage() {
                   />
                 </div>
                 <div className="p-6">
-                  <h4 className="text-lg font-bold text-white mb-2">{fac.title}</h4>
+                  <h4 className="text-lg font-bold text-white mb-2 font-serif">{fac.title}</h4>
                   <p className="text-xs text-gray-400 font-light leading-relaxed">
                     {fac.desc}
                   </p>
@@ -194,10 +200,10 @@ export default function AboutPage() {
                 className="glass-card rounded-2xl p-6 border border-white/10 flex flex-col justify-between"
               >
                 <div>
-                  <span className="text-[10px] text-[#d4af37] uppercase tracking-wider font-semibold">
+                  <span className="text-[10px] text-[#d4af37] uppercase tracking-wider font-semibold font-mono">
                     {tr.exp}
                   </span>
-                  <h4 className="text-lg font-bold text-white mt-1 mb-1">
+                  <h4 className="text-lg font-bold text-white mt-1 mb-1 font-serif">
                     {tr.name}
                   </h4>
                   <p className="text-xs text-[#c5a059] font-medium mb-4">
@@ -214,19 +220,27 @@ export default function AboutPage() {
 
         {/* Bottom CTA */}
         <section className="text-center p-12 rounded-3xl glass-card border border-[#d4af37]/30">
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-            Experience the Legacy in Person
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 font-serif">
+            Experience the Legacy at Yog Maya Range
           </h3>
           <p className="text-sm text-gray-300 max-w-lg mx-auto mb-6">
             We welcome serious equestrians, collectors, and breed connoisseurs for private farm walkthroughs and stud viewings.
           </p>
-          <Link
-            href="/book"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] to-[#d4af37]"
-          >
-            <span>Schedule Private Viewing</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/book"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] to-[#d4af37]"
+            >
+              <span>Schedule Private Viewing</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/farmhouse"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-white/10 hover:bg-white/15 border border-white/20"
+            >
+              <span>Explore Farmhouse</span>
+            </Link>
+          </div>
         </section>
       </div>
     </div>

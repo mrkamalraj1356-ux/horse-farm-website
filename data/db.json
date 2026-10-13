@@ -1,0 +1,961 @@
+{
+  "horses": [
+    {
+      "id": "sultan",
+      "name": "Sultan",
+      "breed": "Marwari",
+      "age": 6,
+      "ageDisplay": "6 Years",
+      "gender": "Male",
+      "genderRole": "Stallion",
+      "height": "16.2 hands",
+      "color": "Jet Black with White Star Blaze",
+      "price": "₹2,50,000",
+      "rawPrice": 250000,
+      "availability": "Available",
+      "training": "Classical Dressage & Royal Procession Trained",
+      "temperament": "Calm, Spirited, Loyal & Highly Responsive",
+      "experience": "State Equestrian Champion, 4 Years Under Saddle",
+      "lineage": "Veer Bahadur x Chandni Lineage (Rajasthan Royal Stud)",
+      "health": "100% Sound, Fully Vaccinated, Clean X-Rays, Coggins Negative",
+      "passportId": "IND-EQ-2020-0982",
+      "description": "A magnificent 6-year-old purebred Marwari stallion exhibiting the signature lyrical inward-curving ears, supreme royal carriage, and an unflinching, fearless temperament.",
+      "detailedStory": "Sultan represents the pinnacle of indigenous Marwari heritage breeding. Sired by the renowned champion stallion Veer Bahadur, Sultan has been nurtured with precision classical groundwork since age two. He moves with breathtaking cadence, possessing high-set neck carriage, expressive eyes, and a deep chest built for endurance. Perfectly trained for ceremonial displays, royal processions, and high-level saddle riding.",
+      "featured": true,
+      "images": [
+        "/horses/sultan/sultan-1.jpg",
+        "/horses/sultan/sultan-2.jpg",
+        "/horses/sultan/sultan-3.jpg"
+      ],
+      "videos": [
+        {
+          "id": "sultan-v1",
+          "title": "Sultan Free Canter & Trot Display",
+          "src": "https://youtu.be/2VpAUWy4MXA",
+          "duration": "0:45",
+          "description": "Demonstrating natural floating trot and responsive gaits in the main training arena."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Breed",
+          "value": "Purebred Marwari"
+        },
+        {
+          "label": "Age",
+          "value": "6 Years"
+        },
+        {
+          "label": "Gender",
+          "value": "Male (Stallion)"
+        },
+        {
+          "label": "Height",
+          "value": "16.2 Hands"
+        },
+        {
+          "label": "Coat Color",
+          "value": "Jet Black / Star Blaze"
+        },
+        {
+          "label": "Ear Structure",
+          "value": "Signature Lyre-curved inward"
+        },
+        {
+          "label": "Microchip ID",
+          "value": "985141002349018"
+        },
+        {
+          "label": "Registration",
+          "value": "Marwari Horse Society of India"
+        }
+      ],
+      "status": "approved",
+      "viewsCount": 1420,
+      "likesCount": 89,
+      "enquiriesCount": 26,
+      "createdAt": "2024-01-15T10:00:00.000Z",
+      "updatedAt": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "rajveer",
+      "name": "Rajveer",
+      "breed": "Kathiawari",
+      "age": 5,
+      "ageDisplay": "5 Years",
+      "gender": "Male",
+      "genderRole": "Stallion",
+      "height": "15.1 hands",
+      "color": "Rich Golden Bay with Dark Points",
+      "price": "₹3,20,000",
+      "rawPrice": 320000,
+      "availability": "Available",
+      "training": "Endurance Trail & Arena Performance",
+      "temperament": "Vibrant, Intrepid, Swift & Affectionate",
+      "experience": "35km Endurance Trail Finisher, Arena Jumping Ready",
+      "lineage": "Saurashtra Desert Dynasty x Kesari Line",
+      "health": "Excellent Hoof Quality, Dewormed, Up-to-date Dental",
+      "passportId": "IND-EQ-2021-0412",
+      "description": "An athletic and exceptionally hardy 5-year-old Kathiawari stallion. Known for supernatural stamina, agile footing, and distinctive refined desert conformation.",
+      "detailedStory": "Bred in the traditions of Saurashtra, Rajveer possesses the dense bone, hard hooves, and desert resilience famous in pure Kathiawari stock. His golden coat gleams in the sunlight, complemented by inward curved ears that touch at the tips. He is spirited yet remarkably gentle to handle from the ground, with swift transitions and natural reining ability.",
+      "featured": true,
+      "images": [
+        "/horses/rajveer/rajveer-1.jpg",
+        "/horses/rajveer/rajveer-2.jpg",
+        "/horses/rajveer/rajveer-3.jpg"
+      ],
+      "videos": [
+        {
+          "id": "rajveer-v1",
+          "title": "Rajveer Agility & Arena Work",
+          "src": "https://www.youtube.com/shorts/6O9T3mQDLNE?t=2&feature=share",
+          "duration": "0:52",
+          "description": "Kathiawari agility showcase including tight turns, quick halts, and spirited gallop."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Breed",
+          "value": "Kathiawari"
+        },
+        {
+          "label": "Age",
+          "value": "5 Years"
+        },
+        {
+          "label": "Gender",
+          "value": "Male (Stallion)"
+        },
+        {
+          "label": "Height",
+          "value": "15.1 Hands"
+        },
+        {
+          "label": "Coat Color",
+          "value": "Golden Bay"
+        },
+        {
+          "label": "Stamina Index",
+          "value": "Elite Desert Endurance Class"
+        },
+        {
+          "label": "Microchip ID",
+          "value": "985141002349077"
+        },
+        {
+          "label": "Registration",
+          "value": "Indigenous Horse Breeders Guild"
+        }
+      ],
+      "status": "approved",
+      "viewsCount": 1180,
+      "likesCount": 72,
+      "enquiriesCount": 18,
+      "createdAt": "2024-02-10T10:00:00.000Z",
+      "updatedAt": "2024-02-10T10:00:00.000Z"
+    },
+    {
+      "id": "noor",
+      "name": "Noor",
+      "breed": "Marwari",
+      "age": 4,
+      "ageDisplay": "4 Years",
+      "gender": "Female",
+      "genderRole": "Mare",
+      "height": "15.3 hands",
+      "color": "Ethereal Silver White / Dapple Grey",
+      "price": "₹2,10,000",
+      "rawPrice": 210000,
+      "availability": "Available",
+      "training": "Foundational Dressage & Gentle Pleasure Riding",
+      "temperament": "Gentle, Highly Sensitive, Graceful & Quiet",
+      "experience": "2 Years Professional Stride Development",
+      "lineage": "Shekhawati Royal Stud x Roopmati",
+      "health": "Prime Breeding & Riding Soundness, Microchipped",
+      "passportId": "IND-EQ-2022-1109",
+      "description": "A breathtaking 4-year-old silver-white Marwari mare. Noor is the embodiment of grace, gentleness, and refined historic beauty.",
+      "detailedStory": "Noor carries the poise of the royal desert mares. Her silver-white dapple coat, arched neck, and soft intelligent eyes make her an absolute standout in any stable. She has been ridden by junior and adult riders with ease, showing a soft mouth and willing attitude. Her bloodlines make her an invaluable addition both as a pleasure saddle mare and future broodmare.",
+      "featured": true,
+      "images": [
+        "/horses/noor/noor-1.jpg",
+        "/horses/noor/noor-2.jpg",
+        "/horses/noor/noor-3.jpg"
+      ],
+      "videos": [
+        {
+          "id": "noor-v1",
+          "title": "Noor Graceful Paddock Trot & Free Movement",
+          "src": "https://www.youtube.com/shorts/YzdXcLFdsHQ?t=2&feature=share",
+          "duration": "0:40",
+          "description": "Observation of gentle gait, harmonious strides, and peaceful pasture behavior."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Breed",
+          "value": "Marwari Mare"
+        },
+        {
+          "label": "Age",
+          "value": "4 Years"
+        },
+        {
+          "label": "Gender",
+          "value": "Female (Mare)"
+        },
+        {
+          "label": "Height",
+          "value": "15.3 Hands"
+        },
+        {
+          "label": "Coat Color",
+          "value": "Silver Dapple White"
+        },
+        {
+          "label": "Suitability",
+          "value": "Pleasure Riding & Premium Breeding"
+        },
+        {
+          "label": "Microchip ID",
+          "value": "985141002349312"
+        },
+        {
+          "label": "Registration",
+          "value": "Marwari Horse Registry"
+        }
+      ],
+      "status": "approved",
+      "viewsCount": 960,
+      "likesCount": 65,
+      "enquiriesCount": 15,
+      "createdAt": "2024-03-01T10:00:00.000Z",
+      "updatedAt": "2024-03-01T10:00:00.000Z"
+    },
+    {
+      "id": "badal",
+      "name": "Badal",
+      "breed": "Kathiawari",
+      "age": 7,
+      "ageDisplay": "7 Years",
+      "gender": "Male",
+      "genderRole": "Stallion",
+      "height": "15.0 hands",
+      "color": "Deep Chocolate Brown",
+      "price": "₹3,80,000",
+      "rawPrice": 380000,
+      "availability": "Booked",
+      "training": "Master Level Reining & Obstacle Navigation",
+      "temperament": "Bold, Focused, Steadfast & Courageous",
+      "experience": "Multiple Regional Breed Champion & Exhibition Star",
+      "lineage": "Rana Pride x Marugandh line",
+      "health": "Peak Athletic Fitness, Complete Veterinary Clearance",
+      "passportId": "IND-EQ-2019-0205",
+      "description": "A champion 7-year-old Kathiawari stallion with unmatched power and presence. Currently reserved / booked by a prestigious private collector.",
+      "detailedStory": "Badal is widely celebrated for his muscular build, deep chest, and bold carriage. Having secured top honors across national breed shows, Badal has proven himself as a sire of distinction and a premier saddle partner. Although currently booked, private viewings can be arranged by special request through our concierge.",
+      "featured": true,
+      "images": [
+        "/horses/badal/badal-1.jpg",
+        "/horses/badal/badal-2.jpg",
+        "/horses/badal/badal-3.jpg"
+      ],
+      "videos": [
+        {
+          "id": "badal-v1",
+          "title": "Badal Masterclass Performance",
+          "src": "https://www.youtube.com/shorts/Tr9rS9eGu64?t=2&feature=share",
+          "duration": "0:48",
+          "description": "Exhibition of precision turns, sliding stops, and regal standing posture."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Breed",
+          "value": "Kathiawari"
+        },
+        {
+          "label": "Age",
+          "value": "7 Years"
+        },
+        {
+          "label": "Gender",
+          "value": "Male (Stallion)"
+        },
+        {
+          "label": "Height",
+          "value": "15.0 Hands"
+        },
+        {
+          "label": "Coat Color",
+          "value": "Deep Chocolate Brown"
+        },
+        {
+          "label": "Status",
+          "value": "Currently Booked"
+        },
+        {
+          "label": "Microchip ID",
+          "value": "985141002348821"
+        },
+        {
+          "label": "Registration",
+          "value": "All India Kathiawari Stud Book"
+        }
+      ],
+      "status": "approved",
+      "viewsCount": 840,
+      "likesCount": 54,
+      "enquiriesCount": 11,
+      "createdAt": "2024-03-15T10:00:00.000Z",
+      "updatedAt": "2024-03-15T10:00:00.000Z"
+    },
+    {
+      "id": "chetak",
+      "name": "Chetak",
+      "breed": "Kathiawari",
+      "age": 6,
+      "ageDisplay": "6 Years",
+      "gender": "Male",
+      "genderRole": "Stallion",
+      "height": "15.2 hands",
+      "color": "Classic Dapple Grey Warhorse Line",
+      "price": "₹4,50,000",
+      "rawPrice": 450000,
+      "availability": "Available",
+      "training": "Historic Martial Equestrian Arts & Open Country Gallop",
+      "temperament": "Fearless, Intensely Loyal, High Energy & Attentive",
+      "experience": "Trained under traditional Indian cavalry reins",
+      "lineage": "Historic Haldighati Bloodline Preservation",
+      "health": "Superb Stamina, Clean Veterinary Certificate",
+      "passportId": "IND-EQ-2020-0771",
+      "description": "Named after the legendary warrior steed, Chetak is an extraordinary 6-year-old stallion with electrifying presence and aristocratic nobility.",
+      "detailedStory": "Possessing remarkable speed, balance, and quick reflexes, Chetak has been conditioned across rugged terrains and sand dunes. He bonds deeply with his rider, responding to the slightest shift in weight. His striking dapple-grey coat and high tail carriage evoke the grand pages of Mewar history.",
+      "featured": true,
+      "images": [
+        "/horses/chetak/chetak-1.jpg",
+        "/horses/chetak/chetak-2.jpg",
+        "/horses/chetak/chetak-3.jpg"
+      ],
+      "videos": [
+        {
+          "id": "chetak-v1",
+          "title": "Chetak Desert Gallop & Traditional Stride",
+          "src": "https://www.youtube.com/shorts/kG45qQbUOow?t=1&feature=share",
+          "duration": "0:55",
+          "description": "Open ground demonstration highlighting speed, rhythm, and fearless temperament."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Breed",
+          "value": "Kathiawari Royal Line"
+        },
+        {
+          "label": "Age",
+          "value": "6 Years"
+        },
+        {
+          "label": "Gender",
+          "value": "Male (Stallion)"
+        },
+        {
+          "label": "Height",
+          "value": "15.2 Hands"
+        },
+        {
+          "label": "Coat Color",
+          "value": "Dapple Grey"
+        },
+        {
+          "label": "Specialty",
+          "value": "Endurance & Heritage Exhibition"
+        },
+        {
+          "label": "Microchip ID",
+          "value": "985141002349889"
+        },
+        {
+          "label": "Registration",
+          "value": "Kathiawari Horse Association"
+        }
+      ],
+      "status": "approved",
+      "viewsCount": 1350,
+      "likesCount": 94,
+      "enquiriesCount": 29,
+      "createdAt": "2024-04-01T10:00:00.000Z",
+      "updatedAt": "2024-04-01T10:00:00.000Z"
+    },
+    {
+      "id": "tara",
+      "name": "Tara",
+      "breed": "Marwari",
+      "age": 3,
+      "ageDisplay": "3 Years",
+      "gender": "Female",
+      "genderRole": "Filly",
+      "height": "15.0 hands",
+      "color": "Warm Golden Chestnut with Flaxen Mane",
+      "price": "₹2,80,000",
+      "rawPrice": 280000,
+      "availability": "In Training",
+      "training": "Ground Schooling, Lungeing & Early Saddle Backing",
+      "temperament": "Curious, Gentle, Inquisitive & Fast Learner",
+      "experience": "Under Professional Academy Program",
+      "lineage": "Udaipur Royal Stables Foundation Stock",
+      "health": "Growing strongly, flawless legs, complete vaccination schedule",
+      "passportId": "IND-EQ-2023-0144",
+      "description": "A promising 3-year-old young Marwari filly. Tara displays exceptional conformation and an eager, willing heart, presently completing her young horse foundation.",
+      "detailedStory": "Tara is our stable’s rising star. With curved lyre ears that accentuate her delicate facial contours, she commands admiration from every visitor. She is currently undergoing respectful, positive-reinforcement training in our indoor arena and will be ready for full saddle work soon. Pre-booking enquiries are welcome.",
+      "featured": false,
+      "images": [
+        "/horses/tara/tara-1.jpg",
+        "/horses/tara/tara-2.jpg",
+        "/horses/tara/tara-3.jpg"
+      ],
+      "videos": [],
+      "specs": [
+        {
+          "label": "Breed",
+          "value": "Marwari"
+        },
+        {
+          "label": "Age",
+          "value": "3 Years"
+        },
+        {
+          "label": "Gender",
+          "value": "Female (Filly)"
+        },
+        {
+          "label": "Height",
+          "value": "15.0 Hands (Growing)"
+        },
+        {
+          "label": "Coat Color",
+          "value": "Golden Chestnut"
+        },
+        {
+          "label": "Program",
+          "value": "Young Horse Academy Program"
+        },
+        {
+          "label": "Microchip ID",
+          "value": "985141002350102"
+        },
+        {
+          "label": "Registration",
+          "value": "Marwari Horse Society"
+        }
+      ],
+      "status": "approved",
+      "viewsCount": 520,
+      "likesCount": 38,
+      "enquiriesCount": 7,
+      "createdAt": "2024-04-15T10:00:00.000Z",
+      "updatedAt": "2024-04-15T10:00:00.000Z"
+    },
+    {
+      "id": "veer--marwari-heritage--464",
+      "name": "Veer (Marwari Heritage)",
+      "breed": "Marwari",
+      "age": 4,
+      "ageDisplay": "4 Years",
+      "gender": "Male",
+      "genderRole": "Stallion",
+      "height": "15.3 hands",
+      "color": "Indigenous Standard",
+      "price": "14,00,000",
+      "rawPrice": 1400000,
+      "availability": "Available",
+      "training": "Verified by Stud Evaluation Board",
+      "temperament": "Calm & Responsive",
+      "experience": "Private Stud Consignment",
+      "lineage": "Indigenous Certified Bloodline",
+      "health": "Veterinary Clearance Passed",
+      "passportId": "IND-EQ-2026-5017",
+      "description": "Magnificent young Marwari stallion with inwards inward-curling lyre ears, high endurance and calm temperament.",
+      "detailedStory": "Magnificent young Marwari stallion with inwards inward-curling lyre ears, high endurance and calm temperament.",
+      "featured": false,
+      "images": [
+        "/horses/chetak/1.jpg"
+      ],
+      "videos": [],
+      "specs": [
+        {
+          "label": "Breed",
+          "value": "Marwari"
+        },
+        {
+          "label": "Age",
+          "value": "4 Years"
+        },
+        {
+          "label": "Gender",
+          "value": "Male"
+        },
+        {
+          "label": "Height",
+          "value": "15.3 hands"
+        }
+      ],
+      "sellerName": "Kunwar Vikram Singh",
+      "status": "approved",
+      "viewsCount": 0,
+      "likesCount": 0,
+      "enquiriesCount": 0,
+      "createdAt": "2026-10-10T17:09:36.545Z",
+      "updatedAt": "2026-10-10T17:09:36.545Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "user-admin-1",
+      "name": "Horse County Chief Director",
+      "phone": "+919829012345",
+      "email": "admin@horsecounty.com",
+      "role": "admin",
+      "city": "Jodhpur, Rajasthan",
+      "status": "active",
+      "passwordHash": "HorseCounty@2025",
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "user-seller-1",
+      "name": "Thakur Ranveer Singh (Heritage Stud)",
+      "phone": "+919876543210",
+      "email": "ranveer@studfarm.in",
+      "role": "seller",
+      "city": "Udaipur, Rajasthan",
+      "status": "active",
+      "passwordHash": "Seller@2025",
+      "createdAt": "2024-01-10T00:00:00.000Z"
+    },
+    {
+      "id": "user-customer-1",
+      "name": "Vikramaditya Rathore",
+      "phone": "+919988776655",
+      "email": "vikram@estate.in",
+      "role": "customer",
+      "city": "Jaipur, Rajasthan",
+      "status": "active",
+      "passwordHash": "Buyer@2025",
+      "createdAt": "2024-02-01T00:00:00.000Z"
+    }
+  ],
+  "enquiries": [
+    {
+      "horseId": "sultan",
+      "horseName": "Sultan",
+      "customerName": "Rohan Sharma",
+      "mobileNumber": "9876543210",
+      "whatsappNumber": "9876543210",
+      "email": "rohan@example.com",
+      "city": "Jaipur",
+      "contactPreference": "WhatsApp",
+      "experienceLevel": "Experienced Rider",
+      "message": "Interested in booking a private viewing for Sultan at Yog Maya Range this weekend.",
+      "id": "enq-1791652176403-kw3fz",
+      "refNumber": "HC-ENQ-53369",
+      "status": "New",
+      "notes": [],
+      "createdAt": "2026-10-10T17:09:36.403Z",
+      "updatedAt": "2026-10-10T17:09:36.403Z"
+    },
+    {
+      "horseId": "sultan",
+      "horseName": "Sultan",
+      "customerName": "Rohan Sharma",
+      "mobileNumber": "9876543210",
+      "whatsappNumber": "9876543210",
+      "email": "rohan@example.com",
+      "city": "Jaipur",
+      "contactPreference": "WhatsApp",
+      "experienceLevel": "Experienced Rider",
+      "message": "Interested in booking a private viewing for Sultan at Yog Maya Range this weekend.",
+      "id": "enq-1791652117927-rvoie",
+      "refNumber": "HC-ENQ-25228",
+      "status": "New",
+      "notes": [],
+      "createdAt": "2026-10-10T17:08:37.927Z",
+      "updatedAt": "2026-10-10T17:08:37.927Z"
+    },
+    {
+      "id": "enq-seed-1",
+      "refNumber": "HC-ENQ-81920",
+      "horseId": "sultan",
+      "horseName": "Sultan",
+      "customerName": "Yuvraj Digvijay Singh",
+      "mobileNumber": "+919829099887",
+      "whatsappNumber": "+919829099887",
+      "email": "digvijay@rajasthanstud.in",
+      "city": "Jaipur, Rajasthan",
+      "contactPreference": "WhatsApp",
+      "experienceLevel": "Experienced Rider",
+      "message": "Interested in acquiring Sultan for royal procession and breeding program. Please share recent veterinary radiographs and schedule private trial.",
+      "status": "In Discussion",
+      "notes": [
+        "Called customer on Jan 18. Trial scheduled for next weekend."
+      ],
+      "createdAt": "2026-10-07T16:54:17.604Z",
+      "updatedAt": "2026-10-08T16:54:17.605Z"
+    }
+  ],
+  "bookings": [
+    {
+      "type": "farmhouse",
+      "targetId": "pkg-royal",
+      "targetName": "Royal Suite Weekend Experience",
+      "customerName": "Ananya Patel",
+      "mobileNumber": "9123456789",
+      "whatsappNumber": "9123456789",
+      "email": "ananya@example.com",
+      "preferredDate": "2026-11-20",
+      "timeSlot": "Full Day & Night Stay",
+      "guestsCount": 4,
+      "bookingPurpose": "Yog Maya Range Private Weekend Stay",
+      "packageId": "pkg-royal",
+      "packageName": "Royal Suite Weekend Experience",
+      "advanceAmount": 35000,
+      "paymentStatus": "unpaid",
+      "message": "Would love a morning dressage viewing session.",
+      "id": "bk-1791652176428-fr4nh",
+      "bookingCode": "HC-BK-639955",
+      "status": "pending",
+      "notes": [],
+      "createdAt": "2026-10-10T17:09:36.428Z",
+      "updatedAt": "2026-10-10T17:09:36.428Z"
+    },
+    {
+      "type": "farmhouse",
+      "targetId": "pkg-royal",
+      "targetName": "Royal Suite Weekend Experience",
+      "customerName": "Ananya Patel",
+      "mobileNumber": "9123456789",
+      "whatsappNumber": "9123456789",
+      "email": "ananya@example.com",
+      "preferredDate": "2026-11-20",
+      "timeSlot": "Full Day & Night Stay",
+      "guestsCount": 4,
+      "bookingPurpose": "Yog Maya Range Private Weekend Stay",
+      "packageId": "pkg-royal",
+      "packageName": "Royal Suite Weekend Experience",
+      "advanceAmount": 35000,
+      "paymentStatus": "unpaid",
+      "message": "Would love a morning dressage viewing session.",
+      "id": "bk-1791652117944-19tau",
+      "bookingCode": "HC-BK-613551",
+      "status": "pending",
+      "notes": [],
+      "createdAt": "2026-10-10T17:08:37.944Z",
+      "updatedAt": "2026-10-10T17:08:37.944Z"
+    },
+    {
+      "id": "bk-seed-1",
+      "bookingCode": "HC-BK-40912",
+      "type": "horse",
+      "targetId": "rajveer",
+      "targetName": "Rajveer",
+      "customerName": "Kavita Singhania",
+      "mobileNumber": "+919920011223",
+      "whatsappNumber": "+919920011223",
+      "email": "kavita@singhaniagroup.com",
+      "preferredDate": "2026-10-15",
+      "timeSlot": "Morning (09:00 AM - 12:00 PM)",
+      "guestsCount": 2,
+      "bookingPurpose": "Private Viewing & Trial",
+      "paymentStatus": "unpaid",
+      "status": "confirmed",
+      "notes": [
+        "Confirmed morning slot with stable master."
+      ],
+      "createdAt": "2026-10-09T16:54:17.605Z",
+      "updatedAt": "2026-10-10T16:54:17.605Z"
+    }
+  ],
+  "sellerSubmissions": [
+    {
+      "sellerName": "Kunwar Vikram Singh",
+      "mobileNumber": "9988776655",
+      "whatsappNumber": "9988776655",
+      "email": "vikram@rajputana.in",
+      "city": "Pushkar, Rajasthan",
+      "horseName": "Veer (Marwari Heritage)",
+      "breed": "Marwari",
+      "age": 4,
+      "gender": "Male",
+      "height": "15.3 hands",
+      "expectedPrice": "14,00,000",
+      "description": "Magnificent young Marwari stallion with inwards inward-curling lyre ears, high endurance and calm temperament.",
+      "images": [
+        "/horses/chetak/1.jpg"
+      ],
+      "id": "sub-1791652176451-fve6u",
+      "refId": "SELL-EQ-24143",
+      "status": "approved",
+      "createdAt": "2026-10-10T17:09:36.451Z",
+      "updatedAt": "2026-10-10T17:09:36.544Z",
+      "adminNotes": "Verified pedigree and veterinary fitness certificates.",
+      "reviewedBy": "user-admin-1",
+      "reviewedAt": "2026-10-10T17:09:36.544Z"
+    },
+    {
+      "sellerName": "Kunwar Vikram Singh",
+      "mobileNumber": "9988776655",
+      "whatsappNumber": "9988776655",
+      "email": "vikram@rajputana.in",
+      "city": "Pushkar, Rajasthan",
+      "horseName": "Veer (Marwari Heritage)",
+      "breed": "Marwari",
+      "age": 4,
+      "gender": "Stallion",
+      "height": "15.3 hands",
+      "expectedPrice": "14,00,000",
+      "description": "Magnificent young Marwari stallion with inwards inward-curling lyre ears, high endurance and calm temperament.",
+      "images": [
+        "/horses/chetak/1.jpg"
+      ],
+      "id": "sub-1791652117981-u2p24",
+      "refId": "SELL-EQ-54668",
+      "status": "pending",
+      "createdAt": "2026-10-10T17:08:37.981Z",
+      "updatedAt": "2026-10-10T17:08:37.981Z"
+    },
+    {
+      "id": "sub-seed-1",
+      "refId": "SELL-EQ-93810",
+      "sellerName": "Rawat Gajendra Singh",
+      "mobileNumber": "+919829144332",
+      "email": "gajendra@heritagefarms.in",
+      "city": "Bikaner, Rajasthan",
+      "horseName": "Kesari",
+      "breed": "Marwari",
+      "age": 4,
+      "gender": "Male",
+      "height": "15.3 hands",
+      "expectedPrice": "₹3,50,000",
+      "description": "Purebred 4-year-old Marwari stallion with inward curved ears and gentle saddle training.",
+      "images": [
+        "/horses/sultan/sultan-1.jpg"
+      ],
+      "status": "pending",
+      "adminNotes": "Awaiting on-site veterinary inspection before approval.",
+      "createdAt": "2026-10-08T16:54:17.605Z",
+      "updatedAt": "2026-10-08T16:54:17.605Z"
+    }
+  ],
+  "farmhousePackages": [
+    {
+      "id": "pkg-day-retreat",
+      "name": "Royal Sanctuary Day Pass & Stable Tour",
+      "tag": "Day Experience",
+      "duration": "6 Hours (10:00 AM - 04:00 PM)",
+      "guestCapacity": "Up to 10 Guests",
+      "price": "₹15,000",
+      "rawPrice": 15000,
+      "features": [
+        "Private guided tour of Mahogany Stables",
+        "Interaction with Marwari & Kathiawari Stallions",
+        "Arena riding demonstration by Master Trainers",
+        "Traditional Rajasthani high-tea and refreshments",
+        "Complimentary estate photography session"
+      ],
+      "description": "Immerse yourself and your guests in the daily royal rhythm of Yog Maya Range. Experience horse grooming, breeding heritage explanations, and peaceful sanctuary hospitality.",
+      "image": "/farm/stables.jpg",
+      "popular": false
+    },
+    {
+      "id": "pkg-royal-photoshoot",
+      "name": "Heritage Pre-Wedding & Film Photoshoot",
+      "tag": "Creative Production",
+      "duration": "Full Day (06:00 AM - 07:00 PM)",
+      "guestCapacity": "Crew & Guests (Up to 25)",
+      "price": "₹45,000",
+      "rawPrice": 45000,
+      "features": [
+        "Exclusive access to 2 Champion Horses with handlers",
+        "Desert trail & sand dune backdrop locations",
+        "Heritage arena and stable courtyard access",
+        "Air-conditioned VIP makeup & dressing villa",
+        "Dedicated equine safety and positioning handlers"
+      ],
+      "description": "The definitive cinematic equestrian backdrop in Rajasthan. Capture breathtaking moments alongside purebred warhorse stallions under soft desert lighting.",
+      "image": "/farm/hero-bg.jpg",
+      "popular": true
+    },
+    {
+      "id": "pkg-private-event",
+      "name": "Yog Maya Range Private Event & Celebration",
+      "tag": "Exclusive Estate",
+      "duration": "Evening / Full Day",
+      "guestCapacity": "50 - 250 Guests",
+      "price": "₹1,20,000",
+      "rawPrice": 120000,
+      "features": [
+        "Full private buyout of outdoor amphitheater lawn",
+        "Royal horse procession welcome for guests",
+        "Classical music & traditional Rajasthani ambiance setup",
+        "Valet parking & 24/7 security concierge",
+        "Catering coordination and guest lounge facilities"
+      ],
+      "description": "Host unforgettable private anniversaries, birthday celebrations, corporate retreats, and royal equestrian banquets at Yog Maya Range.",
+      "image": "/farm/heritage.jpg",
+      "popular": false
+    }
+  ],
+  "experiences": [
+    {
+      "id": "exp-dressage",
+      "title": "Classical Dressage & Riding Masterclass",
+      "category": "Equestrian Schooling",
+      "duration": "90 Minutes",
+      "price": "₹5,000 / rider",
+      "rawPrice": 5000,
+      "description": "Private 1-on-1 instruction under certified classical masters on trained Marwari steeds in our silica sand arena.",
+      "inclusions": [
+        "Equestrian helmet & safety gear",
+        "Arena schooling & seat balance analysis",
+        "Grooming & bonding introduction"
+      ],
+      "image": "/farm/arena.jpg",
+      "available": true
+    },
+    {
+      "id": "exp-trail-ride",
+      "title": "Sunset Desert Dune Trail Ride",
+      "category": "Heritage Trail",
+      "duration": "2 Hours",
+      "price": "₹7,500 / rider",
+      "rawPrice": 7500,
+      "description": "Guided cross-country trek traversing pristine golden sand dunes and indigenous wildlife trails at twilight.",
+      "inclusions": [
+        "High-end leather saddle & bridle",
+        "Lead ranger & horse concierge escort",
+        "Sunset tea break at dune pavilion"
+      ],
+      "image": "/farm/riding.jpg",
+      "available": true
+    },
+    {
+      "id": "exp-pedigree-consult",
+      "title": "Stud Breeding & Pedigree Evaluation",
+      "category": "Breeding Advisory",
+      "duration": "2 Hours",
+      "price": "₹10,000",
+      "rawPrice": 10000,
+      "description": "In-depth consultation with our Chief Stud Director regarding mare selection, semen collection, and Marwari registry validation.",
+      "inclusions": [
+        "Detailed 4-generation pedigree chart review",
+        "Veterinary soundness & genetic analysis",
+        "Private viewing of active breeding stallions"
+      ],
+      "image": "/horses/sultan/sultan-1.jpg",
+      "available": true
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif-1791652176451",
+      "recipientRole": "admin",
+      "title": "New Horse Consignment For Review",
+      "message": "Kunwar Vikram Singh submitted \"Veer (Marwari Heritage)\" (SELL-EQ-24143) for sale valuation.",
+      "type": "submission",
+      "read": false,
+      "link": "/admin",
+      "createdAt": "2026-10-10T17:09:36.451Z"
+    },
+    {
+      "id": "notif-1791652176429",
+      "recipientRole": "admin",
+      "title": "New Booking Request (HC-BK-639955)",
+      "message": "Ananya Patel requested a booking for Royal Suite Weekend Experience on 2026-11-20.",
+      "type": "booking",
+      "read": false,
+      "link": "/admin",
+      "createdAt": "2026-10-10T17:09:36.429Z"
+    },
+    {
+      "id": "notif-1791652176403",
+      "recipientRole": "admin",
+      "title": "New Horse Acquisition Enquiry",
+      "message": "Rohan Sharma submitted an enquiry (HC-ENQ-53369) for Sultan.",
+      "type": "enquiry",
+      "read": false,
+      "link": "/admin",
+      "createdAt": "2026-10-10T17:09:36.403Z"
+    },
+    {
+      "id": "notif-1791652117981",
+      "recipientRole": "admin",
+      "title": "New Horse Consignment For Review",
+      "message": "Kunwar Vikram Singh submitted \"Veer (Marwari Heritage)\" (SELL-EQ-54668) for sale valuation.",
+      "type": "submission",
+      "read": false,
+      "link": "/admin",
+      "createdAt": "2026-10-10T17:08:37.981Z"
+    },
+    {
+      "id": "notif-1791652117944",
+      "recipientRole": "admin",
+      "title": "New Booking Request (HC-BK-613551)",
+      "message": "Ananya Patel requested a booking for Royal Suite Weekend Experience on 2026-11-20.",
+      "type": "booking",
+      "read": false,
+      "link": "/admin",
+      "createdAt": "2026-10-10T17:08:37.944Z"
+    },
+    {
+      "id": "notif-1791652117927",
+      "recipientRole": "admin",
+      "title": "New Horse Acquisition Enquiry",
+      "message": "Rohan Sharma submitted an enquiry (HC-ENQ-25228) for Sultan.",
+      "type": "enquiry",
+      "read": false,
+      "link": "/admin",
+      "createdAt": "2026-10-10T17:08:37.927Z"
+    },
+    {
+      "id": "notif-1",
+      "recipientRole": "admin",
+      "title": "New Horse Acquisition Enquiry",
+      "message": "Yuvraj Digvijay Singh submitted an enquiry for Sultan.",
+      "type": "enquiry",
+      "read": false,
+      "link": "/admin",
+      "createdAt": "2026-10-07T16:54:17.605Z"
+    },
+    {
+      "id": "notif-2",
+      "recipientRole": "admin",
+      "title": "New Seller Consignment Submission",
+      "message": "Rawat Gajendra Singh submitted horse \"Kesari\" for evaluation.",
+      "type": "submission",
+      "read": false,
+      "link": "/admin",
+      "createdAt": "2026-10-08T16:54:17.605Z"
+    }
+  ],
+  "wishlists": [],
+  "paymentOrders": [],
+  "auditLogs": [
+    {
+      "id": "audit-1791652176547",
+      "adminId": "admin",
+      "adminEmail": "admin@horsecounty.com",
+      "action": "SUBMISSION_APPROVED",
+      "targetType": "SellerSubmission",
+      "targetId": "sub-1791652176451-fve6u",
+      "details": "Admin approved horse consignment \"Veer (Marwari Heritage)\" (SELL-EQ-24143).",
+      "createdAt": "2026-10-10T17:09:36.547Z"
+    },
+    {
+      "id": "audit-1",
+      "adminId": "user-admin-1",
+      "adminEmail": "admin@horsecounty.com",
+      "action": "SYSTEM_INITIALIZED",
+      "targetType": "SYSTEM",
+      "targetId": "INIT",
+      "details": "Horse County database initialized with certified horse stock and Yog Maya Range configurations.",
+      "createdAt": "2026-10-10T16:54:17.605Z"
+    }
+  ]
+}

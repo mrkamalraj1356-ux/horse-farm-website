@@ -24,7 +24,7 @@ export default function GalleryPage() {
   const categories = [
     { id: 'all', label: 'All Media' },
     { id: 'horses', label: 'Horses' },
-    { id: 'farm', label: 'Farm & Stables' },
+    { id: 'farm', label: 'Yog Maya Range' },
     { id: 'training', label: 'Training Arena' },
     { id: 'riding', label: 'Riding & Trails' },
     { id: 'events', label: 'Events' },
@@ -62,7 +62,7 @@ export default function GalleryPage() {
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
+              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
                 activeCategory === cat.id
                   ? 'bg-gradient-to-r from-[#f3e5ab] to-[#d4af37] text-black shadow-lg scale-105'
                   : 'bg-white/5 text-gray-300 hover:text-white border border-white/10 hover:border-[#d4af37]/40'
@@ -103,7 +103,7 @@ export default function GalleryPage() {
 
               {/* Bottom Info */}
               <div className="absolute bottom-3 left-3 right-3 z-10">
-                <h4 className="text-base font-bold text-white group-hover:text-[#d4af37] transition-colors mb-1">
+                <h4 className="text-base font-bold text-white group-hover:text-[#d4af37] transition-colors mb-1 font-serif">
                   {item.title}
                 </h4>
                 <p className="text-xs text-gray-300 font-light line-clamp-1">
@@ -157,7 +157,7 @@ export default function GalleryPage() {
 
                 <div className="p-4 flex-1 flex flex-col justify-between">
                   <div>
-                    <h5 className="text-sm font-bold text-white mb-1">
+                    <h5 className="text-sm font-bold text-white mb-1 font-serif">
                       {video.title}
                     </h5>
                     <p className="text-xs text-gray-400 font-light mb-3">
@@ -169,7 +169,7 @@ export default function GalleryPage() {
                     href={`/horses/${video.horseId}`}
                     className="text-xs text-[#d4af37] hover:underline flex items-center gap-1 font-semibold"
                   >
-                    <span>View {video.horseName}'s full profile</span>
+                    <span>View {video.horseName}&apos;s full profile</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -184,7 +184,7 @@ export default function GalleryPage() {
         <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-between p-4 sm:p-8">
           <div className="w-full max-w-5xl flex items-center justify-between text-white pb-4 border-b border-white/10">
             <div>
-              <h3 className="text-xl font-bold text-[#d4af37]">
+              <h3 className="text-xl font-bold text-[#d4af37] font-serif">
                 {selectedItem.title}
               </h3>
               <p className="text-xs text-gray-400">
@@ -194,7 +194,7 @@ export default function GalleryPage() {
             <button
               type="button"
               onClick={() => setSelectedItem(null)}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white"
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white cursor-pointer"
               aria-label="Close"
             >
               <X className="w-6 h-6" />

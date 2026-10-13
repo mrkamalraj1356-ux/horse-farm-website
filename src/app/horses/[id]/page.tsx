@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { HORSES_DATA, getHorseById, getSimilarHorses } from '@/data/horses';
+import { getHorses, getHorseById } from '@/lib/db';
 import { FARM_CONFIG } from '@/data/config';
 import HorseGallery from '@/components/HorseGallery';
 import HorseVideoSection from '@/components/HorseVideoSection';
@@ -14,23 +14,25 @@ import {
   Sparkles,
   ArrowRight,
   ArrowUpRight,
-  Heart,
-  Share2,
+  Award,
   FileText,
-  BadgeCheck,
-  Award
+  Eye,
+  Heart
 } from 'lucide-react';
 import AskAIHorseButton from './AskAIHorseButton';
 
+export const revalidate = 0;
+
 export async function generateStaticParams() {
-  return HORSES_DATA.map((horse) => ({
+  const horses = await getHorses({ status: 'approved' });
+  return horses.map((horse) => ({
     id: horse.id,
   }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const horse = getHorseById(id);
+  const horse = await getHorseById(id);
 
   if (!horse) {
     return {
@@ -39,12 +41,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   }
 
   return {
-    title: `${horse.name} - ${horse.breed} ${horse.genderRole} | ${FARM_CONFIG.name}`,
+    title: `${horse.name} — ${horse.breed} ${horse.genderRole || horse.gender} | ${FARM_CONFIG.name}`,
     description: horse.description,
     openGraph: {
-      title: `${horse.name} (${horse.breed}) - ${FARM_CONFIG.name}`,
+      title: `${horse.name} (${horse.breed}) — ${FARM_CONFIG.name}`,
       description: horse.description,
-      images: [horse.images[0]],
+      images: [horse.images?.[0] || '/farm/hero-bg.jpg'],
     },
   };
 }
@@ -55,13 +57,14 @@ export default async function HorseDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const horse = getHorseById(id);
+  const horse = await getHorseById(id);
 
   if (!horse) {
     notFound();
   }
 
-  const similarHorses = getSimilarHorses(horse.id, 3);
+  const allHorses = await getHorses({ status: 'approved' });
+  const similarHorses = allHorses.filter((h) => h.id.toLowerCase() !== horse.id.toLowerCase()).slice(0, 3);
 
   return (
     <div className="pt-28 pb-24 min-h-screen">
@@ -79,7 +82,7 @@ export default async function HorseDetailsPage({
           <span className="text-[#d4af37] font-semibold">{horse.name}</span>
           <span className="ml-auto text-[11px] text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-3 py-1 rounded-full hidden sm:inline-flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Official Profile: {horse.name} Media Exclusively</span>
+            <span>Official Profile: Dedicated {horse.name} Media Exclusively</span>
           </span>
         </div>
 
@@ -90,7 +93,7 @@ export default async function HorseDetailsPage({
             <HorseGallery
               horseName={horse.name}
               horseId={horse.id}
-              images={horse.images}
+              images={horse.images || []}
             />
 
             {/* Quick Pedigree Certification Banner */}
@@ -104,13 +107,13 @@ export default async function HorseDetailsPage({
                     Passport & Microchip Verified
                   </div>
                   <div className="text-gray-400 font-mono text-[11px]">
-                    ID: {horse.passportId}
+                    ID: {horse.passportId || 'Certified Indian Equine Registry'}
                   </div>
                 </div>
               </div>
 
               <div className="hidden sm:block text-right">
-                <div className="text-[#c5a059] font-medium">{horse.lineage}</div>
+                <div className="text-[#c5a059] font-medium">{horse.lineage || 'Noble Heritage'}</div>
                 <div className="text-gray-500 text-[10px]">Registered Stud Ancestry</div>
               </div>
             </div>
@@ -138,11 +141,11 @@ export default async function HorseDetailsPage({
                   </span>
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight font-serif mt-2">
+                <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight font-serif mt-2">
                   {horse.name}
                 </h1>
                 <p className="text-sm text-gray-400 font-light mt-1">
-                  {horse.genderRole} • {horse.ageDisplay} • {horse.height}
+                  {horse.genderRole || horse.gender} • {horse.ageDisplay || `${horse.age} Years`} • {horse.height}
                 </p>
 
                 {/* Price Display */}
@@ -165,31 +168,35 @@ export default async function HorseDetailsPage({
               {/* Description */}
               <div className="text-sm text-gray-300 leading-relaxed font-light space-y-3">
                 <p>{horse.description}</p>
-                <p className="text-xs text-gray-400 leading-relaxed">
-                  {horse.detailedStory}
-                </p>
+                {horse.detailedStory && (
+                  <p className="text-xs text-gray-400 leading-relaxed">
+                    {horse.detailedStory}
+                  </p>
+                )}
               </div>
 
               {/* Key Specs Grid */}
-              <div className="rounded-2xl glass-card p-5 border border-white/10">
-                <h4 className="text-xs uppercase tracking-[0.2em] text-[#d4af37] font-semibold mb-4 flex items-center gap-2">
-                  <Award className="w-4 h-4 text-[#d4af37]" />
-                  <span>Conformation & Attributes</span>
-                </h4>
+              {horse.specs && horse.specs.length > 0 && (
+                <div className="rounded-2xl glass-card p-5 border border-white/10">
+                  <h4 className="text-xs uppercase tracking-[0.2em] text-[#d4af37] font-semibold mb-4 flex items-center gap-2">
+                    <Award className="w-4 h-4 text-[#d4af37]" />
+                    <span>Conformation & Attributes</span>
+                  </h4>
 
-                <div className="grid grid-cols-2 gap-3 text-xs">
-                  {horse.specs.map((sp, idx) => (
-                    <div key={idx} className="flex flex-col pb-2 border-b border-white/5">
-                      <span className="text-[10px] uppercase text-gray-500 tracking-wider">
-                        {sp.label}
-                      </span>
-                      <span className="text-gray-200 font-medium mt-0.5 truncate">
-                        {sp.value}
-                      </span>
-                    </div>
-                  ))}
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    {horse.specs.map((sp, idx) => (
+                      <div key={idx} className="flex flex-col pb-2 border-b border-white/5">
+                        <span className="text-[10px] uppercase text-gray-500 tracking-wider">
+                          {sp.label}
+                        </span>
+                        <span className="text-gray-200 font-medium mt-0.5 truncate">
+                          {sp.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Action Buttons Section */}
@@ -200,7 +207,7 @@ export default async function HorseDetailsPage({
                     href={`/buy?horse=${horse.id}`}
                     className="py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-[#f3e5ab] via-[#d4af37] to-[#aa8222] shadow-[0_5px_20px_rgba(212,175,55,0.4)] hover:opacity-95 text-center flex items-center justify-center gap-2"
                   >
-                    <span>Buy This Horse</span>
+                    <span>Buy / Enquire</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </Link>
                 ) : (
@@ -213,11 +220,11 @@ export default async function HorseDetailsPage({
                 )}
 
                 <Link
-                  href={`/book?horse=${horse.id}`}
+                  href={`/book?type=horse&horse=${horse.id}`}
                   className="py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-white/10 hover:bg-white/15 border border-white/20 hover:border-[#d4af37] text-center flex items-center justify-center gap-2 transition-colors"
                 >
                   <Calendar className="w-4 h-4 text-[#d4af37]" />
-                  <span>Book This Horse</span>
+                  <span>Book Trial / Viewing</span>
                 </Link>
               </div>
 
@@ -231,7 +238,7 @@ export default async function HorseDetailsPage({
           </div>
         </div>
 
-        {/* Dedicated Video Section: "Watch [Name] in Action" */}
+        {/* Dedicated Video Section */}
         <HorseVideoSection horse={horse} />
 
         {/* Detailed Veterinary, Training & Temperament Cards */}
@@ -241,14 +248,14 @@ export default async function HorseDetailsPage({
               <div className="w-10 h-10 rounded-xl bg-[#d4af37]/10 border border-[#d4af37]/30 flex items-center justify-center mb-4">
                 <Award className="w-5 h-5 text-[#d4af37]" />
               </div>
-              <h4 className="text-base font-bold text-white mb-2">
-                Training & Temperament
+              <h4 className="text-base font-bold text-white mb-2 font-serif">
+                Training & Disciplines
               </h4>
               <p className="text-xs text-gray-300 leading-relaxed mb-3">
-                <strong>Training:</strong> {horse.training}
+                <strong>Training:</strong> {horse.training || 'Classical Groundwork & Saddle Backed'}
               </p>
               <p className="text-xs text-gray-400 leading-relaxed">
-                <strong>Temperament:</strong> {horse.temperament}
+                <strong>Temperament:</strong> {horse.temperament || 'Calm, Spirited & Highly Responsive'}
               </p>
             </div>
 
@@ -256,11 +263,11 @@ export default async function HorseDetailsPage({
               <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4">
                 <ShieldCheck className="w-5 h-5 text-emerald-400" />
               </div>
-              <h4 className="text-base font-bold text-white mb-2">
+              <h4 className="text-base font-bold text-white mb-2 font-serif">
                 Veterinary & Soundness
               </h4>
               <p className="text-xs text-gray-300 leading-relaxed mb-3">
-                <strong>Health Status:</strong> {horse.health}
+                <strong>Health Status:</strong> {horse.health || '100% Sound, Fully Vaccinated, Clean X-Rays'}
               </p>
               <p className="text-xs text-gray-400 leading-relaxed">
                 Full physical exam, dental check, and hoof balance report available upon enquiry.
@@ -271,33 +278,35 @@ export default async function HorseDetailsPage({
               <div className="w-10 h-10 rounded-xl bg-[#d4af37]/10 border border-[#d4af37]/30 flex items-center justify-center mb-4">
                 <FileText className="w-5 h-5 text-[#d4af37]" />
               </div>
-              <h4 className="text-base font-bold text-white mb-2">
-                Breeding & Experience
+              <h4 className="text-base font-bold text-white mb-2 font-serif">
+                Lineage & Heritage
               </h4>
               <p className="text-xs text-gray-300 leading-relaxed mb-3">
-                <strong>Experience:</strong> {horse.experience}
+                <strong>Lineage:</strong> {horse.lineage || 'Indigenous Heritage Stud Book'}
               </p>
               <p className="text-xs text-gray-400 leading-relaxed">
-                <strong>Lineage:</strong> {horse.lineage}
+                <strong>Experience:</strong> {horse.experience || 'Under saddle with professional trainers'}
               </p>
             </div>
           </div>
         </section>
 
-        {/* Similar Horses (Showing 3 OTHER horses with THEIR OWN distinct media) */}
-        <section className="py-16 border-t border-white/10">
-          <SectionHeading
-            badge="Sanctuary Collection"
-            title="Similar Horses"
-            subtitle={`Other prestigious horses bred with equal dedication at ${FARM_CONFIG.name}.`}
-          />
+        {/* Similar Horses */}
+        {similarHorses.length > 0 && (
+          <section className="py-16 border-t border-white/10">
+            <SectionHeading
+              badge="Sanctuary Collection"
+              title="Similar Horses"
+              subtitle={`Other prestigious horses bred with equal dedication at ${FARM_CONFIG.name}.`}
+            />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {similarHorses.map((simHorse) => (
-              <HorseCard key={simHorse.id} horse={simHorse} />
-            ))}
-          </div>
-        </section>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {similarHorses.map((simHorse) => (
+                <HorseCard key={simHorse.id} horse={simHorse} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
